@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getOrderById, getOrderDetailByOrderId } from "../api/OrderApi";
+import { getUrlVnpay } from "../api/VnPayApi";
+import { Link } from "react-router-dom";
 
 const OrderDetail = (props) => {
   const [orderDetail, setOrderDetail] = useState([]);
@@ -7,38 +9,64 @@ const OrderDetail = (props) => {
   const [amount, setAmount] = useState();
   const [sale, setSale] = useState();
   const [total, setTotal] = useState();
-
+  const [payment, setPayment] = useState();
+  const [paymentUrl, setPaymentUrl] = useState("");
+  const [oderId, setOrderId] = useState();
   const encode = atob(
     window.location.href.substring(window.location.href.lastIndexOf("/") + 1)
   );
 
   useEffect(() => {
-    onLoad();
-  }, []);
+    const fetchOrderData = async () => {
+      try {
+        const orderResp = await getOrderById(encode);
+        const orderDetailResp = await getOrderDetailByOrderId(encode);
 
-  const onLoad = () => {
-    getOrderById(encode).then((resp) => {
-      setOrder(resp.data);
-      setSale(resp.data.voucher ? resp.data.voucher.discount : 0);
-      setTotal(resp.data.total);
-    });
-    getOrderDetailByOrderId(encode).then((resp) => {
-      setOrderDetail(resp.data);
-      const result = resp.data.reduce(
-        (price, item) => price + item.sellPrice * item.quantity,
-        0
-      );
-      setAmount(result);
-    });
-  };
+        const orderData = orderResp.data;
+        const orderDetails = orderDetailResp.data;
+
+        setOrder(orderData);
+        setSale(orderData.voucher ? orderData.voucher.discount : 0);
+        setTotal(orderData.total);
+
+        setOrderDetail(orderDetails);
+        const result = orderDetails.reduce(
+          (price, item) => price + item.sellPrice * item.quantity,
+          0
+        );
+        setPayment(orderDetails[0].order.payment);
+        setAmount(result);
+      } catch (error) {
+        console.error("Error loading data", error);
+      }
+    };
+
+    fetchOrderData();
+  }, [encode]);
+
+  useEffect(() => {
+    if (total && order.id) {
+      getUrlVnpay(total, order.id).then((response) => {
+        setPaymentUrl(response.data);
+      });
+    }
+  }, [total, order.id]);
+  // const handleClick = (e) => {
+  //   getUrlVnpay(total, order.id).then((response) => {
+  //     setPaymentUrl(response.data);
+  //   });
+  // };
 
   return (
     <div className="container-fluid row padding mb-5">
-    <div className="col-10 offset-1 text ">
-          <p className="display-4 text-primary" style={{ fontSize: "34px",fontWeight: "bolder"  }}>
-            Đơn hàng #{order.id}
-          </p>
-        </div>
+      <div className="col-10 offset-1 text ">
+        <p
+          className="display-4 text-primary"
+          style={{ fontSize: "34px", fontWeight: "bolder" }}
+        >
+          Đơn hàng #{order.id}
+        </p>
+      </div>
       <div className="col-8 welcome mb-5 mt-5">
         <div className="col-10 offset-1 mb-5">
           <table className="table table-striped table-bordered">
@@ -87,7 +115,20 @@ const OrderDetail = (props) => {
                 Trạng thái thanh toán
               </p>
               <p className="text-danger" style={{ fontWeight: "bolder" }}>
-                {order && order.isPending ? "Đã thanh toán" : "Chưa thanh toán"}
+                {order && order.isPending ? (
+                  "Đã thanh toán"
+                ) : payment === "Chuyển khoản qua VNPAY" ? (
+                  <div className="text-black">
+                    <p className="text-danger">Chưa Thanh Toán </p>
+                    Vui lòng thanh toán{" "}
+                    <a
+                      className="text-primary"
+                      href={paymentUrl ? paymentUrl : "#"}
+                    >
+                      Tại Đây
+                    </a>
+                  </div>
+                ) : null}
               </p>
             </div>
             <div className="col text ">
@@ -101,10 +142,9 @@ const OrderDetail = (props) => {
                 {order.orderStatus && order.orderStatus.name}
               </p>
             </div>
-           
           </div>
           <div className="row">
-             <div className="col text ">
+            <div className="col text ">
               <p
                 className="display-4 text-primary"
                 style={{ fontSize: "24px" }}
@@ -135,7 +175,6 @@ const OrderDetail = (props) => {
           <p>DC: {order.address}</p>
         </div>
       </div>
-      
     </div>
   );
 };

@@ -118,7 +118,7 @@ const Order = (props) => {
       })
       .catch((error) => console.log(error.response.data.Errors));
   };
-
+  console.log(order);
   return (
     <div>
       <div className="col-12">

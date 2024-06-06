@@ -1,0 +1,35 @@
+.m-t-5 {
+  margin-top: 50px;
+}
+.padding-4 {
+  padding: 40px;
+}
+.img-content {
+  object-fit: cover;
+  aspect-ratio: 3/4;
+}
+.gap-20 {
+  gap: 20px;
+}
+.banner-2-absolute {
+  left: -30px;
+  right: 0;
+  width: 80%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 0 auto;
+  top: 70px;
+  color: white;
+  font-weight: 700;
+}
+.p-banner {
+  color: white;
+}
+.h2-banner2 {
+  width: 60%;
+}
+.hover-zoom:hover {
+  transform: translateY(-8px);
+
+  transition: transform ease-out 0.5s;
+}

@@ -60,7 +60,7 @@ const ProductDetail = (props) => {
       .catch((error) => console.log(error));
     setStatus(stock > count);
 
-    if(props.user){
+    if (props.user) {
       getCartItemByAccountId(props.user.id).then((resp) => {
         setCart(resp.data.map((item) => ({ ...item, checked: false })));
       });
@@ -89,7 +89,9 @@ const ProductDetail = (props) => {
           const data = {
             accountId: props.user.id,
             attributeId: attributeId,
-            quantity: flagId.includes(attributeId) ? (count + obj.quantity) : count,
+            quantity: flagId.includes(attributeId)
+              ? count + obj.quantity
+              : count,
             lastPrice: lastPrice,
           };
           console.log(data);
@@ -128,19 +130,18 @@ const ProductDetail = (props) => {
 
   const updateCount = (value) => {
     console.log(value);
-    if(value >= 1){
+    if (value >= 1) {
       isEnoughCartItem(flag, value)
-      .then(() => {
-        setCount(value);
-      })
-      .catch((error) => {
-        toast.warning(error.response.data.Errors);
-        setCount(1);
-      });
-    }else{
+        .then(() => {
+          setCount(value);
+        })
+        .catch((error) => {
+          toast.warning(error.response.data.Errors);
+          setCount(1);
+        });
+    } else {
       toast.warning("Số lượng không hợp lệ");
     }
-   
   };
 
   const addCount = (value) => {
@@ -216,12 +217,13 @@ const ProductDetail = (props) => {
                     <div className="mt-5">
                       <button
                         className="btn btn-outline-dark"
-                        onClick={() => addCount(count + 1)}
+                        onClick={() => addCount(count - 1)}
+                        disabled={count == 1}
                       >
-                        +
+                        -
                       </button>
                       <input
-                      className="text-center"
+                        className="text-center"
                         type="number"
                         name="quantity"
                         style={{ width: "60px" }}
@@ -231,10 +233,9 @@ const ProductDetail = (props) => {
                       />
                       <button
                         className="btn btn-outline-dark"
-                        onClick={() => addCount(count - 1)}
-                        disabled={count == 1}
+                        onClick={() => addCount(count + 1)}
                       >
-                        -
+                        +
                       </button>
                     </div>
                     <hr />

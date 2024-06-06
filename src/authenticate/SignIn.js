@@ -3,6 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import "./signin.css";
 import { signIn } from "../api/AuthenticateApi";
 import { useForm } from "react-hook-form";
+import { MdPerson, MdLock } from "react-icons/md";
 import { toast } from "react-toastify";
 import { getMe } from "../api/AccountApi";
 import { SlSocialFacebook } from "react-icons/sl";
@@ -49,10 +50,10 @@ const SignIn = (props) => {
                 style={{ borderRadius: "1rem" }}
               >
                 <div className="card-body p-5">
-                  <div className="mb-md-5 mt-md-4 pb-5">
+                  <div className="mb-md-5 mt-md-4 pb-5 flex-col-d">
                     <h2 className=" login100-form-title">Đăng nhập</h2>
                     <form
-                      className="needs-validation"
+                      className="needs-validation flex-col-d"
                       onSubmit={handleSubmit(signInHandler)}
                     >
                       <div
@@ -72,17 +73,15 @@ const SignIn = (props) => {
                         />
                         <span
                           className="focus-input100"
-                          data-symbol="&#xf206;"
+                          data-symbol="&#xf190;"
                         ></span>
-                        {errors.username && (
-                          <div
-                            className="alert alert-danger error"
-                            role="alert"
-                          >
-                            Tài khoản không hợp lệ!
-                          </div>
-                        )}
+                        <MdPerson className="focus-input100" color="#adadad" />
                       </div>
+                      {errors.username && (
+                        <div className="alert alert-danger error" role="alert">
+                          Tài khoản không hợp lệ!
+                        </div>
+                      )}
 
                       <div
                         className="wrap-input100 validate-input"
@@ -103,69 +102,29 @@ const SignIn = (props) => {
                           className="focus-input100"
                           data-symbol="&#xf190;"
                         ></span>
-                        {errors.password && (
-                          <div
-                            className="alert alert-danger error"
-                            role="alert"
-                          >
-                            Mật khẩu không hợp lệ!
-                          </div>
-                        )}
+                        <MdLock className="focus-input100" color="#adadad" />
                       </div>
-
-                      <div className="text-right p-t-8 p-b-31">
+                      {errors.password && (
+                        <div className="alert alert-danger error" role="alert">
+                          Mật khẩu không hợp lệ!
+                        </div>
+                      )}
+                      {/* <div className="text-right p-t-8 p-b-31">
                         <a href="#">Forgot password?</a>
-                      </div>
+                      </div> */}
 
                       <div className="container-login100-form-btn">
                         <div className="wrap-login100-form-btn">
                           <div className="login100-form-bgbtn"></div>
-                          <button className="login100-form-btn">Login</button>
+                          <button className="login100-form-btn ">Login</button>
                         </div>
                       </div>
-
-                      <div className="txt1 text-center pt-[54px] pb-[20px]">
-                        <span>Or Sign Up Using</span>
-                      </div>
-
-                      <div className="flex-c-m">
-                        <a href="#" className="login100-social-item bg1">
-                          <SlSocialFacebook />
-                        </a>
-
-                        <a href="#" className="login100-social-item bg2">
-                          <SlSocialGoogle />
-                        </a>
-                      </div>
-
-                      <div className="flex-col-c pt-[15px]">
-                        <span className="txt1 pb-[17px]">Or Sign Up Using</span>
-
-                        <a href="#" className="txt2">
-                          Sign Up
-                        </a>
-                      </div>
                     </form>
-                    <div className="d-flex justify-content-center text-center mt-4 pt-1">
-                      <a href="#!" className="text-white">
-                        <i className="fab fa-facebook-f fa-lg" />
-                      </a>
-                      <a href="#!" className="text-white">
-                        <i className="fab fa-twitter fa-lg mx-4 px-2" />
-                      </a>
-                      <a href="#!" className="text-white">
-                        <i className="fab fa-google fa-lg" />
-                      </a>
-                    </div>
                   </div>
                   <div>
-                    <p className="mb-0">
+                    <p className="mb-0 text-center">
                       Chưa có tài khoản?{" "}
-                      <NavLink
-                        to="/register"
-                        exact
-                        className="text-white-50 fw-bold"
-                      >
+                      <NavLink to="/register" exact className=" fw-bold">
                         Đăng kí ngay
                       </NavLink>
                     </p>

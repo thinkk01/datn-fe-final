@@ -15,7 +15,7 @@ export const getAllProvince = () =>
     try {
       const response = await axios({
         method: "get",
-        url: "https://vapi.vnappmob.com/api/province/",
+        url: "https://esgoo.net/api-tinhthanh/1/0.htm",
       });
       resolve(response);
     } catch (error) {
@@ -27,7 +27,7 @@ export const getAllDistrict = (id) =>
     try {
       const response = await axios({
         method: "get",
-        url: `https://vapi.vnappmob.com/api/province/district/${id}`,
+        url: `https://esgoo.net/api-tinhthanh/2/${id}.htm`,
       });
       resolve(response);
     } catch (error) {
@@ -39,10 +39,49 @@ export const getAllWard = (id) =>
     try {
       const response = await axios({
         method: "get",
-        url: `https://vapi.vnappmob.com/api/province/ward/${id}`,
+        url: ` https://esgoo.net/api-tinhthanh/3/${id}.htm`,
       });
       resolve(response);
     } catch (error) {
       reject(error);
     }
   });
+// export const getAllProvince = () =>
+//   new Promise(async (resolve, reject) => {
+//     try {
+//       const response = await axios({
+//         method: "get",
+//         url: "https://vapi.vnappmob.com/api/province/",
+//         headers:{
+//           "Content-Type" : "application/json"
+//       }
+//       });
+//       resolve(response);
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// export const getAllDistrict = (id) =>
+//   new Promise(async (resolve, reject) => {
+//     try {
+//       const response = await axios({
+//         method: "get",
+//         url: `https://vapi.vnappmob.com/api/province/district/${id}`,
+//       });
+//       resolve(response);
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// export const getAllWard = (id) =>
+//   new Promise(async (resolve, reject) => {
+//     try {
+//       const response = await axios({
+//         method: "get",
+//         url: `https://vapi.vnappmob.com/api/province/ward/${id}`,
+//       });
+//       resolve(response);
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });

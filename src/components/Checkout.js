@@ -9,7 +9,7 @@ import { getVoucherByCode } from "../api/VoucherApi";
 import Spinner from "./spinner/Spinner";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-
+import { MdDelete } from "react-icons/md";
 const Checkout = (props) => {
   const [amount, setAmount] = useState();
   const [cart, setCart] = useState([]);
@@ -25,6 +25,7 @@ const Checkout = (props) => {
   const [obj, setObj] = useState({});
   const [idDistrict, setIdDistrict] = useState(null);
   const [idWard, setIdWard] = useState(null);
+
   const handleCloseFirst = () => {
     setShowFirst(false);
   };
@@ -48,9 +49,9 @@ const Checkout = (props) => {
   const textHandler = (value) => {
     setText(value);
   };
-
+  // setInfo(resp.data.data)
   const onLoad = () => {
-    getAllProvince().then((resp) => setInfo(resp.data.results));
+    getAllProvince().then((resp) => setInfo(resp.data.data));
     if (props.user) {
       getCartItemByAccountId(props.user.id).then((resp) => {
         setCart(resp.data.filter((item) => props.buy.includes(item.id + "")));
@@ -119,7 +120,7 @@ const Checkout = (props) => {
     const fetchDistrict = async () => {
       const resDistric = await getAllDistrict(idDistrict);
       if (resDistric.status === 200) {
-        setDistrict(resDistric?.data.results);
+        setDistrict(resDistric?.data.data);
       }
     };
     fetchDistrict();
@@ -128,29 +129,23 @@ const Checkout = (props) => {
   useEffect(() => {
     const fetchWard = async () => {
       const resWard = await getAllWard(idWard);
-      console.log(resWard);
       if (resWard.status === 200) {
-        setWard(resWard?.data.results);
+        setWard(resWard?.data.data);
       }
     };
     fetchWard();
   }, [idWard]);
-  const onLoadDistrictHandler = (province_name) => {
-    const resp = info.filter((item) => item.province_name === province_name);
-    console.log(province_name);
-    return setIdDistrict(resp[0].province_id); // ma id
+  const onLoadDistrictHandler = (province_id) => {
+    return setIdDistrict(province_id); // ma id
   };
 
-  const onLoadWardHandler = (id) => {
-    // const resp = district.filter((item) => item.district_id === id); // ok
-    // console.log("id" + id);
-    // console.log(district);
-    setIdWard(id);
-    // resp.map((item) => console.log(item));
-    // setIdWard(resp[0].wards);
+  const onLoadWardHandler = (district_name) => {
+    const resp = district.filter((item) => item.full_name === district_name); // ok
+    setIdWard(resp[0].id);
   };
 
   const onSubmitHandler = (data) => {
+    console.log(data);
     if (voucher.length > 0) {
       getVoucherByCode(voucher)
         .then(() => {
@@ -195,6 +190,35 @@ const Checkout = (props) => {
           toast.error(error.response.data.Errors);
           refreshVoucherHandler();
         });
+    } else if (data.payment === "Chuyển khoản qua VNPAY") {
+      const order = {
+        fullname: data.name,
+        phone: data.phone,
+        address: `${data.address}, ${data.ward}, ${data.district}, ${data.province}`,
+        email: data.email,
+        total: amount,
+        note: data.note,
+        isPending: false,
+        payment: data.payment,
+        accountId: props.user ? props.user.id : -1,
+        code: voucher,
+        orderDetails: cart.map((item) => ({
+          quantity: item.quantity,
+          originPrice: item.price,
+          sellPrice: (item.price * (100 - item.discount)) / 100,
+          attribute: {
+            id: item.id,
+          },
+        })),
+      };
+      console.log("payment vnpay");
+      createOrder(order)
+        .then((resp) => {
+          toast.success("Đặt hàng thành công");
+          props.clearHandler();
+          history.push(`/order/detail/${resp.data.encodeUrl}`);
+        })
+        .catch(() => history.push("/out-of-stock"));
     } else {
       setLoading(true);
 
@@ -338,7 +362,7 @@ const Checkout = (props) => {
                   {info &&
                     info.map((item, index) => (
                       <option key={index} value={item.id}>
-                        {item.province_name}
+                        {item.full_name}
                       </option>
                     ))}
                 </select>
@@ -357,7 +381,7 @@ const Checkout = (props) => {
                   {district &&
                     district.map((item, index) => (
                       <option key={index} value={item.district_id}>
-                        {item.district_name}
+                        {item.full_name}
                       </option>
                     ))}
                 </select>
@@ -375,7 +399,7 @@ const Checkout = (props) => {
                   {ward &&
                     ward.map((item, index) => (
                       <option value={item.name} key={index}>
-                        {item.ward_name}
+                        {item.full_name}
                       </option>
                     ))}
                 </select>
@@ -510,13 +534,23 @@ const Checkout = (props) => {
                     mục Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền
                     đã được chuyển.
                   </p>
-                  <p>Ví dụ: 01234 - 0987654321</p>
+                  <p>Ví dụ: 01234 - 0337213898</p>
                   <p>Thông tin tài khoản:</p>
-                  <p>
-                    Trần Thị Thủy - stk: 04136519801 - TPbank chi nhánh Hà Nội
-                  </p>
+                  <p>Nguyễn Đức Thịnh - stk: 0337213898 - MB Bank</p>
                 </div>
               )}
+            </div>
+            <div className="form-check mt-2">
+              <input
+                className="form-check-input"
+                type="radio"
+                value="Chuyển khoản qua VNPAY"
+                {...register("payment", { required: true })}
+                onChange={(e) => textHandler(e.target.value)}
+              />
+              <label className="form-check-label">
+                Chuyển khoản qua VNPAY <br />
+              </label>
             </div>
             <button
               className="btn btn-primary btn-lg mt-5 mb-5"

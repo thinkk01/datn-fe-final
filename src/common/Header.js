@@ -113,7 +113,7 @@ const Header = (props) => {
         <div className="head-1 p-head grid-2">
           <div className="d-flex">
             <div className="location relative p-0-12 italic">VN</div>
-            <div className="currency p-0-12 italic">VND</div>
+            <div className="currency p-0-12 italic">VNĐ</div>
           </div>
           <span className="text-center">Freeship within 2km radius</span>
           <div className="text-right italic">Hotline: 0337213898 - Thinkk</div>

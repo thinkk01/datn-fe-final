@@ -6,6 +6,7 @@ import {
   removeCartItem,
   isEnoughCartItem,
 } from "../api/CartApi";
+import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const Cart = (props) => {
@@ -213,16 +214,20 @@ const Cart = (props) => {
                         <button
                           className="btn btn-outline-dark"
                           onClick={() =>
-                            addCartItemHandler(item.id, item.quantity + 1)
+                            addCartItemHandler(item.id, item.quantity - 1)
                           }
+                          disabled={item.quantity == 1}
                         >
-                          +
+                          -
                         </button>
                         <input
                           type="number"
                           name="quantity"
                           className="text-center"
-                          style={{ width: "40px" }}
+                          style={{
+                            width: "40px",
+                            backgroundColor: "transparent",
+                          }}
                           value={item.quantity}
                           onChange={(e) =>
                             modifyCartItemHandler(item.id, e.target.value)
@@ -232,11 +237,10 @@ const Cart = (props) => {
                         <button
                           className="btn btn-outline-dark"
                           onClick={() =>
-                            modifyCartItemHandler(item.id, item.quantity - 1)
+                            modifyCartItemHandler(item.id, item.quantity + 1)
                           }
-                          disabled={item.quantity == 1}
                         >
-                          -
+                          +
                         </button>
                       </div>
                     </td>
@@ -251,16 +255,12 @@ const Cart = (props) => {
                     </td>
                     <td>
                       <button
-                        className="border-0 pl-4"
-                        style={{ backgroundColor: "white" }}
+                        className="border-0"
                         onClick={() =>
                           removeCartItemHandler(item.id, item.quantity)
                         }
                       >
-                        <i
-                          className="fa fa-trash-o mt-5 text-danger"
-                          style={{ fontSize: "24px" }}
-                        />
+                        <MdDelete className="fa fa-trash-o mt-5 text-danger" />
                       </button>
                     </td>
                   </tr>

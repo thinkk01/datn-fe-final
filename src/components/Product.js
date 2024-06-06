@@ -294,7 +294,10 @@ const Product = (props) => {
               <div className="row padding">
                 {products &&
                   products.map((item, index) => (
-                    <div className="col-md-4 mb-3 item-hover" key={index}>
+                    <div
+                      className="col-md-4 mb-3 item-hover over-hidden"
+                      key={index}
+                    >
                       <div className="card h-100 mini-pro">
                         <div className="d-flex justify-content-between position-absolute t-r-0">
                           <div className="label-new">
