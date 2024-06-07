@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getOrderById, getOrderDetailByOrderId } from "../api/OrderApi";
-import { getUrlVnpay } from "../api/VnPayApi";
-import { Link } from "react-router-dom";
+import { getPendingVnPay, getUrlVnpay } from "../api/VnPayApi";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const OrderDetail = (props) => {
   const [orderDetail, setOrderDetail] = useState([]);
@@ -56,7 +57,23 @@ const OrderDetail = (props) => {
   //     setPaymentUrl(response.data);
   //   });
   // };
+  // GET pending
+  const [isPending1, setIsPending1] = useState(false);
+  const location = useLocation();
+  useEffect(() => {
+    const fetchPendingStatus = async () => {
+      try {
+        const response = await getPendingVnPay();
+        console.log(response);
+        // setIsPending1(response.data.isPending1);
+      } catch (error) {
+        console.error("Error fetching pending status:", error);
+      }
+    };
 
+    fetchPendingStatus();
+  }, [location]);
+  console.log(isPending1);
   return (
     <div className="container-fluid row padding mb-5">
       <div className="col-10 offset-1 text ">

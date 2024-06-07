@@ -24,6 +24,7 @@ import Blog from "../components/blog/Blog";
 import Chat from "../components/chat/Chat";
 import ForgotPassword from "../authenticate/ForgotPassword";
 import Profile from "../authenticate/Profile";
+import { getMe } from "../api/AccountApi";
 
 const UserLayOut = () => {
   const [show, setShow] = useState(false);
@@ -50,7 +51,22 @@ const UserLayOut = () => {
   const userHandler = (user) => {
     setUser(user);
   };
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log(token);
+      authenticateUser(token);
+    }
+  }, []);
+  const authenticateUser = (token) => {
+    getMe(token)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user info:", error);
+      });
+  };
   const searchHandler = (keyword) => {
     setKeyword(keyword);
   };

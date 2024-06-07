@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import "./signin.css";
 import { signIn } from "../api/AuthenticateApi";
@@ -11,6 +11,20 @@ import { SlSocialGoogle } from "react-icons/sl";
 
 const SignIn = (props) => {
   const history = useHistory();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      authenticateUser(token);
+    }
+  }, []);
+  const authenticateUser = (token) => {
+    getMe(token)
+      .then((res) => {
+        props.setUser(res.data);
+        history.push("/");
+      })
+      .catch((error) => console.error("Error fetching user info:", error));
+  };
   const signInHandler = (data) => {
     const userFlag = {
       ...data,
@@ -91,7 +105,7 @@ const SignIn = (props) => {
                         <input
                           className="input100"
                           type="password"
-                          name="pass"
+                          name="password"
                           placeholder="Type your password"
                           {...register("password", {
                             required: true,
