@@ -123,11 +123,26 @@ const Order = (props) => {
     <div>
       <div className="col-12">
         <div className="container-fluid welcome mb-5 mt-7">
-          <div className="col-10 offset-1 text mini-card">
-            <p className="text-danger text-center" style={{ fontSize: "34px" }}>
-              Đơn hàng của bạn
-            </p>
+          <div className="welcome padding-40px background-color-xam mb-head ">
+            <div className="row ">
+              {" "}
+              <NavLink to="/">
+                <u>Trang chủ </u>
+              </NavLink>{" "}
+              / Đơn Hàng
+            </div>
+            <h4 className="card-title text-newproduct mb-0 fw-bolder">
+              Đơn hàng đã đặt
+            </h4>
           </div>
+          {/* <div className="col-10 offset-1 text mini-card mb-0">
+            <p
+              className="card-title text-newproduct fw-bolder text-center"
+              style={{ fontSize: "34px" }}
+            >
+              Đơn hàng đã đặt
+            </p>
+          </div> */}
           <div className="row col-12 mb-5">
             <div className="col-12 mb-3 mt-3 mini-card">
               <div className="form-check form-check-inline mr-5">

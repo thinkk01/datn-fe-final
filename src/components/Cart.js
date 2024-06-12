@@ -8,6 +8,7 @@ import {
 } from "../api/CartApi";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 const Cart = (props) => {
   const [cart, setCart] = useState([]);
@@ -156,8 +157,17 @@ const Cart = (props) => {
   return (
     <div className="col-12">
       <div className="container-fluid mb-5 mt-7">
-        <div className="mini-card">
-          <h4 className="text-danger">Giỏ hàng của bạn</h4>
+        <div className="welcome padding-40px background-color-xam mb-head ">
+          <div className="row ">
+            {" "}
+            <NavLink to="/">
+              <u>Trang chủ </u>
+            </NavLink>{" "}
+            / Giỏ Hàng
+          </div>
+          <h4 className="card-title text-newproduct mb-0 fw-bolder">
+            Giỏ Hàng Của Bạn
+          </h4>
         </div>
         <div className="">
           <table className="table table-striped table-bordered">

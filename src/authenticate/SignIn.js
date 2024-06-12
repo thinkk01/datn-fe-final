@@ -32,7 +32,7 @@ const SignIn = (props) => {
     };
     signIn(userFlag)
       .then((res) => {
-        toast.success("Đăng nhập thành công!");
+        toast.success("Đăng nhập thành công!", { autoClose: true });
         localStorage.setItem("token", res.data.accessToken);
         getMe(res.data.accessToken)
           .then((res) => {

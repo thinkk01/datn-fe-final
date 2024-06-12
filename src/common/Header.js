@@ -165,6 +165,15 @@ const Header = (props) => {
         } `}
       >
         <div className="collapse navbar-collapse col justify-center p-30 gap-50">
+          {isFixed && (
+            <img
+              src={logo}
+              className="justify-self-center"
+              width={100}
+              height={50}
+              alt=""
+            />
+          )}
           <ul className="navbar-nav gap-50">
             <li
               className={
@@ -185,7 +194,7 @@ const Header = (props) => {
               }
             >
               <NavLink className="nav-link text-white" to="/store" exact>
-                Sản phẩm
+                Mua Sắm
               </NavLink>
             </li>
             <li

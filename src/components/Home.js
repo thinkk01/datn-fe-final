@@ -126,8 +126,14 @@ const Home = (props) => {
         <Banner3 />
       </div>
       <div className="container-fluid padding">
-        <div className="row welcome mini-card">
-          <h4 className="title text-newproduct mb-0">Sản phẩm mới</h4>
+        <div className="row welcome mini-card flex-col-center-a gap-20">
+          <h4 className="title text-newproduct box-shadow-0 mb-0">
+            Sản phẩm mới
+          </h4>
+          <p className="">
+            Hãy xem bộ sưu tập Sản phẩm mới, vừa mới được nhập hàng từ
+            ShopThinkk
+          </p>
         </div>
       </div>
       <div className="col-11 container-fluid">

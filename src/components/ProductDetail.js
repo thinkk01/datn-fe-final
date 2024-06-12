@@ -9,6 +9,9 @@ import { isEnoughCartItem } from "../api/CartApi";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
+import imgAtm from "../static/images/payment/atm.png";
+import imgCod from "../static/images/payment/cod.png";
+import imgVnpay from "../static/images/payment/vnpay.png";
 import { getCartItemByAccountId } from "../api/CartApi";
 
 const ProductDetail = (props) => {
@@ -24,7 +27,7 @@ const ProductDetail = (props) => {
   const [show, setShow] = useState(false);
   const [temp, setTemp] = useState();
   const [cart, setCart] = useState();
-
+  const [isHovered, setIsHovered] = useState(true);
   const handleClose = () => setShow(false);
   const handleShow = (value) => {
     getProductById(value)
@@ -34,6 +37,7 @@ const ProductDetail = (props) => {
       })
       .catch((error) => console.log(error));
     setShow(true);
+    setIsHovered(false);
   };
 
   useEffect(() => {
@@ -153,7 +157,11 @@ const ProductDetail = (props) => {
         toast.warning(error.response.data.Errors);
       });
   };
+  // const [mainImage, setMainImage] = useState(item.main);
 
+  const handleThumbnailClick = (image) => {
+    // setMainImage(image);
+  };
   return (
     <div>
       {item && (
@@ -170,14 +178,17 @@ const ProductDetail = (props) => {
                   />
                 </div>
                 <div className="col-md-8">
-                  <div className="card-body">
-                    <h1 className="card-title text-danger fw-bolder">
-                      {item.name}
-                    </h1>
-                    <hr />
-                    <p className="card-text fw-bold fs-5">Mã SP: {item.code}</p>
-                    <hr />
-                    <h4 className="card-text fw-bolder text-danger fs-5">
+                  <div className="card-body product-detail-im">
+                    {/* <p className="card-text fw-bold fs-5">{item.brand}</p> */}
+                    {/* <p className="card-text fw-bold fs-5">Mã SP: {item.code}</p> */}
+
+                    <div>
+                      <h1 className="card-title text-newproduct fw-bolder">
+                        {item.name}
+                      </h1>
+                      <hr />
+                    </div>
+                    {/* <h4 className="card-text fw-bolder text-danger fs-5">
                       Giá bán:{" "}
                       {price &&
                         (
@@ -188,71 +199,125 @@ const ProductDetail = (props) => {
                     <h6 className="card-text fw-bolder fs-5">
                       Giá gốc:{" "}
                       <del>{price && price.toLocaleString() + " đ"}</del>
-                    </h6>
-                    <h6 className="card-text fw-bolder fs-5" hidden>
-                      Sản phẩm còn: {stock && stock + " đôi"}
-                    </h6>
-                    <hr />
-                    <div className="div">
-                      <label className="mr-5">Chọn size</label>
-                      {attributes.map((i, index) => (
-                        <div
-                          className="form-check form-check-inline"
-                          key={index}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions"
-                            id="inlineRadio3"
-                            defaultValue="option3"
-                            onChange={() => onModify(i.price, i.stock, i.id)}
-                            disabled={i.stock === 0}
-                            checked={flag == i.id}
-                          />
-                          <label className="form-check-label">{i.size}</label>
+                    </h6> */}
+                    <div>
+                      <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between">
+                          <p className="h4 text-primary">
+                            {(
+                              (item.price * (100 - item.discount)) /
+                              100
+                            ).toLocaleString()}
+                            đ{" "}
+                          </p>
+
+                          <p className="mb-0 font-size-small text-secondary">
+                            <strike>{item.price.toLocaleString()}đ</strike>
+                          </p>
                         </div>
-                      ))}
+                      </div>
+                      <p>
+                        <strong className="">Số lượng: {stock && stock}</strong>
+                      </p>
+                      <hr />
                     </div>
-                    <div className="mt-5">
-                      <button
-                        className="btn btn-outline-dark"
-                        onClick={() => addCount(count - 1)}
-                        disabled={count == 1}
-                      >
-                        -
-                      </button>
-                      <input
-                        className="text-center"
-                        type="number"
-                        name="quantity"
-                        style={{ width: "60px" }}
-                        value={count}
-                        onChange={(e) => updateCount(e.target.value)}
-                        min={1}
-                      />
-                      <button
-                        className="btn btn-outline-dark"
-                        onClick={() => addCount(count + 1)}
-                      >
-                        +
-                      </button>
+                    <div>
+                      <div className="div">
+                        <label className="mr-5">Chọn size</label>
+                        {attributes.map((i, index) => (
+                          <div
+                            className="form-check form-check-inline"
+                            key={index}
+                          >
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="inlineRadioOptions"
+                              id="inlineRadio3"
+                              defaultValue="option3"
+                              onChange={() => onModify(i.price, i.stock, i.id)}
+                              disabled={i.stock === 0}
+                              checked={flag == i.id}
+                            />
+                            <label className="form-check-label">{i.size}</label>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="d-flex gap-20">
+                        <div>
+                          <button
+                            className="btn btn-outline-dark"
+                            onClick={() => addCount(count - 1)}
+                            disabled={count == 1}
+                          >
+                            -
+                          </button>
+                          <input
+                            className="text-center"
+                            type="number"
+                            name="quantity"
+                            style={{ width: "30px" }}
+                            value={count}
+                            onChange={(e) => updateCount(e.target.value)}
+                            min={1}
+                          />
+                          <button
+                            className="btn btn-outline-dark"
+                            onClick={() => addCount(count + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            onClick={() =>
+                              onAddCartHandler(
+                                flag,
+                                (price * (100 - item.discount)) / 100
+                              )
+                            }
+                            className="btn btn-outline-primary"
+                          >
+                            Thêm vào giỏ
+                          </button>
+                          <NavLink
+                            to="/cart"
+                            className="btn btn-outline-primary ml-2"
+                          >
+                            Đi đến giỏ hàng
+                          </NavLink>
+                        </div>
+                      </div>
+                      <hr />
                     </div>
-                    <hr />
-                    <button
-                      onClick={() =>
-                        onAddCartHandler(
-                          flag,
-                          (price * (100 - item.discount)) / 100
-                        )
-                      }
-                      className="btn btn-primary text-white"
-                    >
-                      Thêm vào giỏ
-                    </button>
-                    <NavLink to="/cart" className="btn btn-primary ml-2">
-                      Đi đến giỏ hàng
-                    </NavLink>
+                    <div className="flex-col-center-a background-color-xam padding-10px">
+                      <p>
+                        <strong>Free shipping on orders over $50!</strong>
+                      </p>
+                      <fieldset>
+                        <ul className="d-flex gap-100">
+                          <li>
+                            <img
+                              src={imgAtm}
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </li>
+                          <li>
+                            <img
+                              src={imgCod}
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </li>
+                          <li>
+                            <img
+                              src={imgVnpay}
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                          </li>
+                        </ul>
+                      </fieldset>
+                    </div>
                   </div>
                 </div>
                 <div className="container row offset-3 mt-5">
@@ -289,7 +354,7 @@ const ProductDetail = (props) => {
                 </div>
               </div>
             </div>
-            <div className="col-8 offset-2">
+            <div className="">
               <div className="container-fluid padding">
                 <div className="row welcome text-center text-dark mb-2 mt-5">
                   <div className="col-12">
@@ -300,7 +365,7 @@ const ProductDetail = (props) => {
                 </div>
               </div>
               <div className="container-fluid padding">
-                <h5 className="font-italic">{item.description}</h5>
+                <p className="">{item.description}</p>
               </div>
             </div>
           </div>
@@ -318,94 +383,193 @@ const ProductDetail = (props) => {
               <div className="row padding">
                 {relate &&
                   relate.map((item, index) => (
-                    <div className="col-md-4 mb-3" key={index}>
+                    // <div className="col-md-4 mb-3" key={index}>
+                    //   <div className="card h-100 mini-pro">
+                    //     <div className="d-flex justify-content-between position-absolute w-100">
+                    //       <div className="label-new">
+                    //         <span className="text-white bg-success small d-flex align-items-center px-2 py-1">
+                    //           <i className="fa fa-star" aria-hidden="true"></i>
+                    //           <span className="ml-1">New</span>
+                    //         </span>
+                    //       </div>
+                    //     </div>
+                    //     <NavLink to={`/product-detail/${item.id}`}>
+                    //       <img
+                    //         src={require(`../static/images/${item.image}`)}
+                    //         style={{ width: 150, height: 150 }}
+                    //         alt="Product"
+                    //         className="mini-card"
+                    //       />
+                    //     </NavLink>
+                    //     <div className="card-body px-2 pb-2 pt-1">
+                    //       <div className="d-flex justify-content-between">
+                    //         <div>
+                    //           <p className="h4 text-primary mini-card">
+                    //             {(
+                    //               (item.price * (100 - item.discount)) /
+                    //               100
+                    //             ).toLocaleString()}{" "}
+                    //             đ
+                    //           </p>
+                    //         </div>
+                    //       </div>
+                    //       <p className="text-warning d-flex align-items-center mb-2">
+                    //         <i className="fa fa-star" aria-hidden="true"></i>
+                    //         <i className="fa fa-star" aria-hidden="true"></i>
+                    //         <i className="fa fa-star" aria-hidden="true"></i>
+                    //         <i className="fa fa-star" aria-hidden="true"></i>
+                    //         <i className="fa fa-star" aria-hidden="true"></i>
+                    //       </p>
+                    //       <p className="mb-0">
+                    //         <strong>
+                    //           <NavLink
+                    //             to={`/product-detail/${item.id}`}
+                    //             className="text-secondary "
+                    //           >
+                    //             {item.name}
+                    //           </NavLink>
+                    //         </strong>
+                    //       </p>
+                    //       <p className="mb-1">
+                    //         <small>
+                    //           <NavLink to="#" className="text-secondary ">
+                    //             {item.brand}
+                    //           </NavLink>
+                    //         </small>
+                    //       </p>
+                    //       <div className="d-flex mb-3 justify-content-between">
+                    //         <div>
+                    //           <p className="mb-0 small">
+                    //             <b>Yêu thích: </b> {item.view} lượt
+                    //           </p>
+                    //           <p className="mb-0 small">
+                    //             <b>Giá gốc: {item.price.toLocaleString()} đ</b>
+                    //           </p>
+                    //           <p className="mb-0 small text-danger">
+                    //             <span className="font-weight-bold">
+                    //               Tiết kiệm:{" "}
+                    //             </span>{" "}
+                    //             {(
+                    //               (item.price * item.discount) /
+                    //               100
+                    //             ).toLocaleString()}{" "}
+                    //             đ ({item.discount}%)
+                    //           </p>
+                    //         </div>
+                    //       </div>
+                    //       <div className="d-flex justify-content-between">
+                    //         <div className="col px-0 ">
+                    //           <button
+                    //             onClick={() => handleShow(item.id)}
+                    //             className="btn btn-outline-primary btn-block"
+                    //           >
+                    //             So sánh
+                    //             <i
+                    //               className="fa fa-shopping-basket"
+                    //               aria-hidden="true"
+                    //             ></i>
+                    //           </button>
+                    //         </div>
+                    //       </div>
+                    //     </div>
+                    //   </div>
+                    // </div>
+                    <div
+                      className="col-md-4 mb-3 item-hover over-hidden"
+                      key={index}
+                    >
                       <div className="card h-100 mini-pro">
-                        <div className="d-flex justify-content-between position-absolute w-100">
+                        <div className="d-flex justify-content-between position-absolute t-r-0">
                           <div className="label-new">
-                            <span className="text-white bg-success small d-flex align-items-center px-2 py-1">
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                              <span className="ml-1">New</span>
+                            <span className="text-red small d-flex align-items-center px-2 py-1">
+                              <strong className="ml-1">Sale!</strong>
                             </span>
                           </div>
                         </div>
                         <NavLink to={`/product-detail/${item.id}`}>
                           <img
                             src={require(`../static/images/${item.image}`)}
-                            style={{ width: 150, height: 150 }}
                             alt="Product"
                             className="mini-card"
                           />
                         </NavLink>
-                        <div className="card-body px-2 pb-2 pt-1">
+                        <div className="card-body flex-col-center px-2 pb-2 pt-1">
                           <div className="d-flex justify-content-between">
-                            <div>
-                              <p className="h4 text-primary mini-card">
+                            <p className="mb-0">
+                              <strong>
+                                <NavLink
+                                  to={`/product-detail/${item.id}`}
+                                  className="text-secondary font-size-base"
+                                >
+                                  {item.name}
+                                </NavLink>
+                              </strong>
+                            </p>
+                            <p className="mb-1">
+                              <small>
+                                <NavLink to="#" className="text-secondary ">
+                                  {item.brand}
+                                </NavLink>
+                              </small>
+                            </p>
+                          </div>
+                          <div className="d-flex align-items-center">
+                            <p className="text-warning m-0 d-flex  gap-4">
+                              <i className="fa fa-star" aria-hidden="true"></i>
+                              <i className="fa fa-star" aria-hidden="true"></i>
+                              <i className="fa fa-star" aria-hidden="true"></i>
+                              <i className="fa fa-star" aria-hidden="true"></i>
+                              <i className="fa fa-star" aria-hidden="true"></i>
+                            </p>
+                            <p className=" d-flex align-items-center mb-0">
+                              ({item.view})
+                            </p>
+                          </div>
+                          <div className="d-flex justify-content-between">
+                            {/* <p className="mb-0 small text-danger">
+                            <span className="font-weight-bold">Tiết kiệm: </span>{" "}
+                            {(
+                              (item.price * item.discount) /
+                              100
+                            ).toLocaleString()}{" "}
+                            đ ({item.discount}%)
+                          </p> */}
+
+                            <div className="d-flex justify-content-between">
+                              <p className="h4 text-primary">
                                 {(
                                   (item.price * (100 - item.discount)) /
                                   100
-                                ).toLocaleString()}{" "}
-                                đ
+                                ).toLocaleString()}
+                                đ{" "}
+                              </p>
+
+                              <p className="mb-0 font-size-small text-secondary">
+                                <strike>{item.price.toLocaleString()}đ</strike>
                               </p>
                             </div>
                           </div>
-                          <p className="text-warning d-flex align-items-center mb-2">
-                            <i className="fa fa-star" aria-hidden="true"></i>
-                            <i className="fa fa-star" aria-hidden="true"></i>
-                            <i className="fa fa-star" aria-hidden="true"></i>
-                            <i className="fa fa-star" aria-hidden="true"></i>
-                            <i className="fa fa-star" aria-hidden="true"></i>
-                          </p>
-                          <p className="mb-0">
-                            <strong>
-                              <NavLink
-                                to={`/product-detail/${item.id}`}
-                                className="text-secondary "
-                              >
-                                {item.name}
-                              </NavLink>
-                            </strong>
-                          </p>
-                          <p className="mb-1">
-                            <small>
-                              <NavLink to="#" className="text-secondary ">
-                                {item.brand}
-                              </NavLink>
-                            </small>
-                          </p>
-                          <div className="d-flex mb-3 justify-content-between">
-                            <div>
-                              <p className="mb-0 small">
-                                <b>Yêu thích: </b> {item.view} lượt
-                              </p>
-                              <p className="mb-0 small">
-                                <b>Giá gốc: {item.price.toLocaleString()} đ</b>
-                              </p>
-                              <p className="mb-0 small text-danger">
-                                <span className="font-weight-bold">
-                                  Tiết kiệm:{" "}
-                                </span>{" "}
-                                {(
-                                  (item.price * item.discount) /
-                                  100
-                                ).toLocaleString()}{" "}
-                                đ ({item.discount}%)
-                              </p>
-                            </div>
+                        </div>
+                        <div className="d-flex relative justify-content-between">
+                          <div className="col px-0 ">
+                            <button
+                              onClick={() => handleShow(item.id)}
+                              className="btn btn-outline-primary btn-block"
+                            >
+                              So sánh
+                            </button>
                           </div>
-                          <div className="d-flex justify-content-between">
-                            <div className="col px-0 ">
-                              <button
-                                onClick={() => handleShow(item.id)}
-                                className="btn btn-outline-primary btn-block"
-                              >
-                                So sánh
-                                <i
-                                  className="fa fa-shopping-basket"
-                                  aria-hidden="true"
-                                ></i>
-                              </button>
-                            </div>
-                          </div>
+                          {/* <div className="ml-2">
+                        <NavLink
+                          to="#"
+                          className="btn btn-outline-success"
+                          data-toggle="tooltip"
+                          data-placement="left"
+                          title="Add to Wishlist"
+                        >
+                          <i className="fa fa-heart" aria-hidden="true"></i>
+                        </NavLink>
+                      </div> */}
                         </div>
                       </div>
                     </div>

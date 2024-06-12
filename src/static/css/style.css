@@ -97,6 +97,41 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+.sidebar-fixed {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100px;
+  left: 0; /* Hoặc giá trị phù hợp để điều chỉnh vị trí */
+  z-index: 1;
+  height: 100%; /* Chiều cao bằng chiều cao của cửa sổ trình duyệt */
+  overflow-y: auto; /* Để sidebar có thể cuộn nếu nội dung quá dài */
+}
+.height-100 {
+  height: 100%;
+}
+.product-detail-im {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.background-color-xam {
+  background-color: #f0f0f0;
+}
+.padding-10px {
+  padding: 10px !important;
+}
+.mb-head {
+  margin-bottom: 30px !important;
+}
+.padding-40px {
+  padding: 40px;
+}
+.flex-col-center-a {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
 .p-0 {
   padding: 0 !important;
   border-radius: 0 !important;
@@ -206,7 +241,14 @@ body {
   left: 0;
   transform: translate(-150%, -50%);
 }
-
+.nav-item-list-group {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-out;
+}
+.nav-item-list-group.open {
+  max-height: 500px; /* Tăng giá trị này nếu danh sách của bạn dài hơn */
+}
 .scroll-button.right {
   transform: translate(150%, -50%);
   right: 0;
@@ -227,7 +269,14 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 30px !important;
 }
 .text-newproduct {
-  color: #bb0000 !important;
+  color: #333333 !important;
+  font-family: "Manrope", Sans-serif;
+  font-size: 30px !important;
+  font-weight: 700 !important;
+  line-height: 30px !important;
+}
+.box-shadow-0 {
+  box-shadow: none;
 }
 .product-list .col-md-4 {
   flex: 0 0 auto;
@@ -242,10 +291,18 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+.row-50 {
+  display: flex;
+  gap: 20px;
+}
 .banner-1 {
   height: 200px;
   display: flex;
   align-items: center;
+}
+.wrap-input50 {
+  position: relative;
+  border-bottom: 2px solid #d9d9d9;
 }
 .over-hidden {
   overflow: hidden;

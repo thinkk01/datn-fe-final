@@ -7,8 +7,8 @@ const Banner2 = () => {
     <>
       <div className="d-flex m-t-5 padding-4 gap-20 justify-content-center">
         <div className="hover-hidden-banner2">
-          <div className="relative  hover-zoom">
-            <img src={img1} className=" w-full hover-zoom " />
+          <div className="relative  hover-zoom2">
+            <img src={img1} className=" w-full  " />
             <div className="flex-col absolute banner-2-absolute">
               <h2 className="h2-banner2">Best fashion of the season</h2>
               <p>Best fashion of the season</p>
@@ -19,7 +19,7 @@ const Banner2 = () => {
           </div>
         </div>
         <div className="hover-hidden-banner2">
-          <div className="relative hover-zoom">
+          <div className="relative hover-zoom2">
             <img src={img2} className=" w-full " />
             <div className="flex-col absolute banner-2-absolute">
               <h2 className="h2-banner2">Latest handbags for ladies</h2>

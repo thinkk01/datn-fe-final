@@ -100,7 +100,7 @@ input:focus {
   padding: 15px;
   margin-bottom: 30px;
   background-color: var(--main-bg);
-  box-shadow: var(--box-shadow);
+  /* box-shadow: var(--box-shadow); */
   border-radius: var(--border-radius);
 }
 .mini-card li {

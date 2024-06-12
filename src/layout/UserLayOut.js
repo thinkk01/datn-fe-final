@@ -25,6 +25,7 @@ import Chat from "../components/chat/Chat";
 import ForgotPassword from "../authenticate/ForgotPassword";
 import Profile from "../authenticate/Profile";
 import { getMe } from "../api/AccountApi";
+import zIndex from "@mui/material/styles/zIndex";
 
 const UserLayOut = () => {
   const [show, setShow] = useState(false);
@@ -237,7 +238,14 @@ const UserLayOut = () => {
         </Route>
       </Switch>
       <Footer></Footer>
-      <ToastContainer></ToastContainer>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      ></ToastContainer>
 
       <div id="scroll">
         <Button variant="primary" onClick={handleShow}>

@@ -145,7 +145,9 @@ const OrderDetail = (props) => {
                       Tại Đây
                     </a>
                   </div>
-                ) : null}
+                ) : (
+                  "Chưa Thanh Toán"
+                )}
               </p>
             </div>
             <div className="col text ">

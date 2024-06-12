@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { getAllProducts, filterProducts } from "../api/ProductApi";
 import { NavLink } from "react-router-dom";
 import "./sidebar/sidebar.css";
-
+import { BsCaretRightFill } from "react-icons/bs";
+import { BsChevronDoubleRight } from "react-icons/bs";
+import { MdOutlinePriceChange } from "react-icons/md";
+import { BsCaretDownFill } from "react-icons/bs";
+import imgSide from "../static/images/payment/image.png";
 const brands = [
   {
     display_name: "PUMA",
@@ -131,6 +135,8 @@ const Product = (props) => {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(10000000);
 
+  const [isFixed, setIsFixed] = useState(false);
+
   var rows = new Array(total).fill(0).map((zero, index) => (
     <li
       className={page === index + 1 ? "page-item active" : "page-item"}
@@ -169,6 +175,21 @@ const Product = (props) => {
   const onChangePage = (page) => {
     setPage(page);
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        // Thay đổi số này tùy theo khoảng cách bạn muốn
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const chooseCategoryHandler = (value) => {
     const index = category.indexOf(value);
@@ -210,87 +231,150 @@ const Product = (props) => {
     }
     onChangePage(1);
   };
-
+  const [isBrandsOpen, setIsBrandsOpen] = useState(false);
+  const [isPricesOpen, setIsPricesOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isColor, setIsColor] = useState(false);
+  const toggleBrands = () => setIsBrandsOpen(!isBrandsOpen);
+  const togglePrices = () => setIsPricesOpen(!isPricesOpen);
+  const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
+  const toggleColor = () => setIsColor(!isColor);
   return (
     <div>
       <div className="mt-7">
+        <div className="container-fluid padding">
+          <div className=" welcome padding-40px background-color-xam mb-head ">
+            <div>
+              {" "}
+              <NavLink to="/">
+                <u>Trang chủ </u>
+              </NavLink>{" "}
+              / Mua Sắm
+            </div>
+            <h4 className="card-title text-newproduct mb-0 fw-bolder">
+              Shop Shoes
+            </h4>
+          </div>
+        </div>
         <div className="row">
-          <div className="col-2.5">
+          <div
+            className={`col-2.5 height-100 ${isFixed ? "sidebar-fixed" : ""}`}
+          >
             <div className="col mini-card">
-              <h4 className="text-danger fw-bolder">Thương hiệu</h4>
-              <ul className="list-group">
-                {brands.map((item, index) => (
-                  <div
-                    className="sidebar__item"
-                    key={index}
-                    onClick={() => chooseBrandHandler(item.value)}
-                  >
+              <h4 className="text-secondary fw-bolder" onClick={toggleBrands}>
+                Thương Hiệu Sản Phẩm{" "}
+                {isBrandsOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
+              </h4>
+              {isBrandsOpen && (
+                <ul className="list-group">
+                  {brands.map((item, index) => (
                     <div
-                      className={
-                        brand.includes(item.value)
-                          ? `sidebar__item-inner active`
-                          : `sidebar__item-inner`
-                      }
+                      className="sidebar__item"
+                      key={index}
+                      onClick={() => chooseBrandHandler(item.value)}
                     >
-                      <i className={item.icon}></i>
-                      <span>{item.display_name}</span>
+                      <div
+                        className={
+                          brand.includes(item.value)
+                            ? `sidebar__item-inner active`
+                            : `sidebar__item-inner`
+                        }
+                      >
+                        <BsCaretRightFill />
+                        <span>{item.display_name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </ul>
+                  ))}
+                </ul>
+              )}
             </div>
             <div className="col mini-card">
-              <h4 className="text-danger fw-bolder">Loại sản phẩm</h4>
-              <ul className="list-group">
-                {categories.map((item, index) => (
-                  <div
-                    className="sidebar__item"
-                    key={index}
-                    onClick={() => chooseCategoryHandler(item.value)}
-                  >
+              <h4
+                className="text-secondary fw-bolder"
+                onClick={toggleCategories}
+              >
+                Loại sản phẩm{" "}
+                {isCategoriesOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
+              </h4>
+              {isCategoriesOpen && (
+                <ul className="list-group">
+                  {categories.map((item, index) => (
                     <div
-                      className={
-                        category.includes(item.value)
-                          ? `sidebar__item-inner active`
-                          : `sidebar__item-inner`
-                      }
+                      className="sidebar__item"
+                      key={index}
+                      onClick={() => chooseCategoryHandler(item.value)}
                     >
-                      <i className={item.icon}></i>
-                      <span>{item.display_name}</span>
+                      <div
+                        className={
+                          category.includes(item.value)
+                            ? `sidebar__item-inner active`
+                            : `sidebar__item-inner`
+                        }
+                      >
+                        <BsCaretRightFill />
+                        <span>{item.display_name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </ul>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="col mt-3 mini-card">
+              <h4 className="text-secondary fw-bolder" onClick={togglePrices}>
+                Màu sắc{" "}
+                {isPricesOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
+              </h4>
+              {isPricesOpen && (
+                <ul className="list-group">
+                  {prices.map((item, index) => (
+                    <div className="sidebar__item" key={index}>
+                      <div
+                        className={
+                          price.includes(item.value)
+                            ? `sidebar__item-inner active`
+                            : `sidebar__item-inner`
+                        }
+                        onClick={() => choosePriceHandler(item.value)}
+                      >
+                        <BsCaretRightFill />
+                        <span>{item.display_name}</span>
+                      </div>
+                    </div>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="col mt-3 mini-card">
+              <h4 className="text-secondary fw-bolder" onClick={toggleColor}>
+                Giá {isPricesOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
+              </h4>
+              {isColor && (
+                <ul className="list-group">
+                  {prices.map((item, index) => (
+                    <div className="sidebar__item" key={index}>
+                      <div
+                        className={
+                          price.includes(item.value)
+                            ? `sidebar__item-inner active`
+                            : `sidebar__item-inner`
+                        }
+                        onClick={() => choosePriceHandler(item.value)}
+                      >
+                        <BsCaretRightFill />
+                        <span>{item.display_name}</span>
+                      </div>
+                    </div>
+                  ))}
+                </ul>
+              )}
             </div>
 
             <div className="col mt-3 mini-card">
-              <h4 className="text-danger fw-bolder">Giá</h4>
-              <ul className="list-group">
-                {prices.map((item, index) => (
-                  <div className="sidebar__item" key={index}>
-                    <div
-                      className={
-                        price.includes(item.value)
-                          ? `sidebar__item-inner active`
-                          : `sidebar__item-inner`
-                      }
-                      onClick={() => choosePriceHandler(item.value)}
-                    >
-                      <i className={item.icon}></i>
-                      <span>{item.display_name}</span>
-                    </div>
-                  </div>
-                ))}
-              </ul>
+              <img src={imgSide} style={{ width: "100%", height: "350px" }} />
             </div>
           </div>
           <div className="col">
             <div className="container-fluid padding">
-              <div className="container-fluid padding">
-                <div className="row welcome mini-card">
-                  <h4 className="title text-danger">Sản phẩm nổi bật</h4>
-                </div>
-              </div>
               <div className="row padding">
                 {products &&
                   products.map((item, index) => (

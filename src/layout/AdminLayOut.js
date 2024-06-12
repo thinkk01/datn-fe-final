@@ -8,7 +8,14 @@ const AdminLayOut = () => {
   return (
     <div>
       <Layout></Layout>
-      <ToastContainer></ToastContainer>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      ></ToastContainer>
     </div>
   );
 };
