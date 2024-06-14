@@ -39,7 +39,7 @@ const Order = (props) => {
     >
       <button
         className="page-link"
-        style={{ borderRadius: 50 }}
+        // style={{ borderRadius: 50 }}
         onClick={() => onChangePage(index + 1)}
       >
         {index + 1}
@@ -244,24 +244,24 @@ const Order = (props) => {
             <nav aria-label="navigation" className="col-4 offset-5">
               <ul className="pagination">
                 <li className={page == 1 ? "page-item disabled" : "page-item"}>
-                  <button
+                  {/* <button
                     className="page-link"
                     style={{ borderRadius: 50 }}
                     onClick={() => onChangePage(1)}
-                  >{`<<`}</button>
+                  >{`<<`}</button> */}
                 </li>
                 {rows}
                 <li
                   className={page == total ? "page-item disabled" : "page-item"}
                 >
-                  <button
+                  {/* <button
                     className="page-link"
                     style={{ borderRadius: 50 }}
                     onClick={() => onChangePage(total)}
                   >
                     {" "}
                     {`>>`}
-                  </button>
+                  </button> */}
                 </li>
               </ul>
             </nav>

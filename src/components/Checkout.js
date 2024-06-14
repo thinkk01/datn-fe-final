@@ -260,7 +260,7 @@ const Checkout = (props) => {
   return (
     <div className="pb-3 container-fluid">
       <div className="py-3 col-10 offset-1 text-center">
-        <h2 className="text-danger">Thông tin mua hàng</h2>
+        {/* <h2 className="text-danger">Thông tin mua hàng</h2> */}
         {loading && <Spinner></Spinner>}
       </div>
       <div className="row">
@@ -342,92 +342,21 @@ const Checkout = (props) => {
           </NavLink>
         </div>
         <div className="col-md-7 col-lg-8">
-          <h4 className="mb-3">Địa chỉ nhận hàng</h4>
+          <h4 className="mb-3">Chi Tiết Đơn Hàng</h4>
           <form
-            className="needs-validation"
+            className="needs-validation form-border-checkout"
             onSubmit={handleSubmit(handleShowFirst)}
           >
-            <div className="row g-3">
-              <div className="col-sm-6">
-                <label htmlFor="firstName" className="form-label">
-                  <strong>Tỉnh Thành</strong>
-                </label>
-                <select
-                  className="form-control"
-                  {...register("province", { required: true })}
-                  required
-                  onChange={(e) => onLoadDistrictHandler(e.target.value)} // name tinh thanh onLoadDistrictHandler(e.target.value)
-                >
-                  <option selected disabled hidden></option>
-                  {info &&
-                    info.map((item, index) => (
-                      <option key={index} value={item.id}>
-                        {item.full_name}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <div className="col-sm-6">
-                <label htmlFor="lastName" className="form-label">
-                  <strong>Quận Huyện</strong>
-                </label>
-                <select
-                  className="form-control"
-                  {...register("district", { required: true })}
-                  required
-                  onChange={(e) => onLoadWardHandler(e.target.value)} // lay id huyen : onLoadWardHandler(e.target.value)
-                >
-                  <option selected disabled hidden></option>
-                  {district &&
-                    district.map((item, index) => (
-                      <option key={index} value={item.district_id}>
-                        {item.full_name}
-                      </option>
-                    ))}
-                </select>
-              </div>
+            <div className="row g-3 ">
               <div className="col-sm-6 mt-2">
                 <label htmlFor="lastName" className="form-label">
-                  <strong>Phường Xã</strong>
-                </label>
-                <select
-                  className="form-control"
-                  {...register("ward", { required: true })}
-                  required
-                >
-                  <option selected disabled hidden></option>
-                  {ward &&
-                    ward.map((item, index) => (
-                      <option value={item.name} key={index}>
-                        {item.full_name}
-                      </option>
-                    ))}
-                </select>
-              </div>
-              <div className="col-12 mt-2">
-                <label htmlFor="address" className="form-label">
-                  <strong>Địa chỉ</strong>
-                </label>
-                <textarea
-                  className="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows={3}
-                  defaultValue={""}
-                  {...register("address", {
-                    required: true,
-                    pattern: /^\s*\S+.*/,
-                  })}
-                />
-                {errors.address && (
-                  <div className="alert alert-danger" role="alert">
-                    Địa chỉ không hợp lệ!
-                  </div>
-                )}
-              </div>
-
-              <div className="col-sm-6 mt-2">
-                <label htmlFor="lastName" className="form-label">
-                  <strong> Họ tên</strong>
+                  <strong>
+                    {" "}
+                    Họ tên
+                    <abbr class="required" title="required">
+                      *
+                    </abbr>
+                  </strong>
                 </label>
                 <input
                   type="text"
@@ -446,7 +375,12 @@ const Checkout = (props) => {
               </div>
               <div className="col-sm-6 mt-2">
                 <label htmlFor="lastName" className="form-label">
-                  <strong>Số điện thoại</strong>
+                  <strong>
+                    Số điện thoại
+                    <abbr class="required" title="required">
+                      *
+                    </abbr>
+                  </strong>
                 </label>
                 <input
                   type="text"
@@ -463,9 +397,15 @@ const Checkout = (props) => {
                   </div>
                 )}
               </div>
-              <div className="col-sm-6 mt-2">
+              <div className="col-sm-6 form-checkout mt-2">
                 <label htmlFor="lastName" className="form-label">
-                  <strong> Email</strong>
+                  <strong>
+                    {" "}
+                    Email
+                    <abbr class="required" title="required">
+                      *
+                    </abbr>
+                  </strong>
                 </label>
                 <input
                   type="text"
@@ -482,6 +422,103 @@ const Checkout = (props) => {
                   </div>
                 )}
               </div>
+              <div className="col-sm-6 form-checkout mt-2">
+                <label htmlFor="firstName" className="form-label">
+                  <strong>
+                    Tỉnh Thành
+                    <abbr class="required" title="required">
+                      *
+                    </abbr>
+                  </strong>
+                </label>
+                <select
+                  className="form-control"
+                  {...register("province", { required: true })}
+                  required
+                  onChange={(e) => onLoadDistrictHandler(e.target.value)} // name tinh thanh onLoadDistrictHandler(e.target.value)
+                >
+                  <option selected disabled hidden></option>
+                  {info &&
+                    info.map((item, index) => (
+                      <option key={index} value={item.id}>
+                        {item.full_name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="col-sm-6 form-checkout mt-2">
+                <label htmlFor="lastName" className="form-label">
+                  <strong>
+                    Quận Huyện
+                    <abbr class="required" title="required">
+                      *
+                    </abbr>
+                  </strong>
+                </label>
+                <select
+                  className="form-control"
+                  {...register("district", { required: true })}
+                  required
+                  onChange={(e) => onLoadWardHandler(e.target.value)} // lay id huyen : onLoadWardHandler(e.target.value)
+                >
+                  <option selected disabled hidden></option>
+                  {district &&
+                    district.map((item, index) => (
+                      <option key={index} value={item.district_id}>
+                        {item.full_name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="col-sm-6 form-checkout mt-2">
+                <label htmlFor="lastName" className="form-label">
+                  <strong>
+                    Phường Xã
+                    <abbr class="required" title="required">
+                      *
+                    </abbr>
+                  </strong>
+                </label>
+                <select
+                  className="form-control"
+                  {...register("ward", { required: true })}
+                  required
+                >
+                  <option selected disabled hidden></option>
+                  {ward &&
+                    ward.map((item, index) => (
+                      <option value={item.name} key={index}>
+                        {item.full_name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="col-12 mt-2">
+                <label htmlFor="address" className="form-label">
+                  <strong>
+                    Địa chỉ
+                    <abbr class="required" title="required">
+                      *
+                    </abbr>
+                  </strong>
+                </label>
+                <textarea
+                  className="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows={3}
+                  defaultValue={""}
+                  {...register("address", {
+                    required: true,
+                    pattern: /^\s*\S+.*/,
+                  })}
+                />
+                {errors.address && (
+                  <div className="alert alert-danger" role="alert">
+                    Địa chỉ không hợp lệ!
+                  </div>
+                )}
+              </div>
+
               <div className="col-12 mt-2">
                 <label htmlFor="address" className="form-label">
                   <strong>Ghi chú</strong>
@@ -496,7 +533,12 @@ const Checkout = (props) => {
               </div>
             </div>
             <label htmlFor="lastName" className="form-label mt-3">
-              <strong>Phương thức thanh toán</strong>
+              <strong>
+                Phương thức thanh toán
+                <abbr class="required" title="required">
+                  *
+                </abbr>
+              </strong>
             </label>
             <div className="form-check">
               <input
@@ -553,7 +595,7 @@ const Checkout = (props) => {
               </label>
             </div>
             <button
-              className="btn btn-primary btn-lg mt-5 mb-5"
+              className="btn btn-outline-primary"
               type="submit"
               style={{ marginLeft: 680 }}
             >

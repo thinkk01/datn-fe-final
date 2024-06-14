@@ -25,25 +25,45 @@ const SignIn = (props) => {
       })
       .catch((error) => console.error("Error fetching user info:", error));
   };
-  const signInHandler = (data) => {
+  const signInHandler = async (data) => {
     const userFlag = {
       ...data,
       admin: false,
     };
-    signIn(userFlag)
-      .then((res) => {
-        toast.success("Đăng nhập thành công!", { autoClose: true });
-        localStorage.setItem("token", res.data.accessToken);
-        getMe(res.data.accessToken)
-          .then((res) => {
-            props.userHandler(res.data);
-            localStorage.setItem("username", res.data.username);
-            localStorage.setItem("password", "123456");
-          })
-          .catch((error) => console.log(error));
-        history.push("/");
-      })
-      .catch((error) => toast.error(error.response.data.Errors));
+    // signIn(userFlag)
+    //   .then((res) => {
+    //     toast.success("Đăng nhập thành công!", { autoClose: true });
+    //     localStorage.setItem("token", res.data.accessToken);
+    //     getMe(res.data.accessToken)
+    //       .then((res) => {
+    //         props.userHandler(res.data);
+    //         localStorage.setItem("username", res.data.username);
+    //         localStorage.setItem("password", "123456");
+    //       })
+    //       .catch((error) => console.log(error));
+    //     history.push("/");
+    //   })
+    //   .catch((error) => toast.error(error.response.data.Errors));
+    try {
+      const signInResponse = await signIn(userFlag);
+      toast.success("Đăng nhập thành công!", { autoClose: 3000 });
+      localStorage.setItem("token", signInResponse.data.accessToken);
+
+      try {
+        const userResponse = await getMe(signInResponse.data.accessToken);
+        props.userHandler(userResponse.data);
+        localStorage.setItem("username", userResponse.data.username);
+        // Không lưu mật khẩu vào localStorage
+      } catch (userError) {
+        console.error("Error getting user data:", userError);
+        toast.error("Lỗi khi lấy thông tin người dùng!");
+      }
+
+      history.push("/");
+    } catch (signInError) {
+      console.error("Sign in error:", signInError);
+      toast.error(signInError.response?.data?.Errors || "Đăng nhập thất bại!");
+    }
   };
 
   const {

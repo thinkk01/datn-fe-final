@@ -134,14 +134,11 @@ const Product = (props) => {
   const [price, setPrice] = useState([]);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(10000000);
-
+  const [color, setColor] = useState([]);
   const [isFixed, setIsFixed] = useState(false);
 
   var rows = new Array(total).fill(0).map((zero, index) => (
-    <li
-      className={page === index + 1 ? "page-item active" : "page-item"}
-      key={index}
-    >
+    <li className={page === index + 1 ? "page-item" : "page-item"} key={index}>
       <button className="page-link" onClick={() => onChangePage(index + 1)}>
         {index + 1}
       </button>
@@ -170,7 +167,7 @@ const Product = (props) => {
       });
     }
     props.changeHeaderHandler(2);
-  }, [page, category, brand, price]);
+  }, [page, category, brand, price, color]);
 
   const onChangePage = (page) => {
     setPage(page);
@@ -200,7 +197,15 @@ const Product = (props) => {
     }
     onChangePage(1);
   };
-
+  const chooseColorHandler = (value) => {
+    const index = category.indexOf(value);
+    if (index > -1) {
+      setCategory(category.filter((i) => i !== value));
+    } else {
+      setCategory([...category, value]);
+    }
+    onChangePage(1);
+  };
   const chooseBrandHandler = (value) => {
     const index = brand.indexOf(value);
     if (index > -1) {
@@ -239,6 +244,16 @@ const Product = (props) => {
   const togglePrices = () => setIsPricesOpen(!isPricesOpen);
   const toggleCategories = () => setIsCategoriesOpen(!isCategoriesOpen);
   const toggleColor = () => setIsColor(!isColor);
+
+  const colors = [
+    { code: "#000", value: "5" },
+    { code: "#FFFFFF", value: "5" },
+    { code: "#008000", value: "5" },
+    { code: "#FFFF00", value: "5" },
+    { code: "#FFA500", value: "5" },
+    { code: "#800080", value: "5" },
+    { code: "#FFC0CB", value: "5" },
+  ];
   return (
     <div>
       <div className="mt-7">
@@ -252,7 +267,7 @@ const Product = (props) => {
               / Mua Sắm
             </div>
             <h4 className="card-title text-newproduct mb-0 fw-bolder">
-              Shop Shoes
+              Mua Sắm
             </h4>
           </div>
         </div>
@@ -276,7 +291,7 @@ const Product = (props) => {
                       <div
                         className={
                           brand.includes(item.value)
-                            ? `sidebar__item-inner active`
+                            ? `sidebar__item-inner `
                             : `sidebar__item-inner`
                         }
                       >
@@ -307,34 +322,9 @@ const Product = (props) => {
                       <div
                         className={
                           category.includes(item.value)
-                            ? `sidebar__item-inner active`
+                            ? `sidebar__item-inner `
                             : `sidebar__item-inner`
                         }
-                      >
-                        <BsCaretRightFill />
-                        <span>{item.display_name}</span>
-                      </div>
-                    </div>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div className="col mt-3 mini-card">
-              <h4 className="text-secondary fw-bolder" onClick={togglePrices}>
-                Màu sắc{" "}
-                {isPricesOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
-              </h4>
-              {isPricesOpen && (
-                <ul className="list-group">
-                  {prices.map((item, index) => (
-                    <div className="sidebar__item" key={index}>
-                      <div
-                        className={
-                          price.includes(item.value)
-                            ? `sidebar__item-inner active`
-                            : `sidebar__item-inner`
-                        }
-                        onClick={() => choosePriceHandler(item.value)}
                       >
                         <BsCaretRightFill />
                         <span>{item.display_name}</span>
@@ -346,16 +336,45 @@ const Product = (props) => {
             </div>
             <div className="col mt-3 mini-card">
               <h4 className="text-secondary fw-bolder" onClick={toggleColor}>
-                Giá {isPricesOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
+                Màu sắc {isColor ? <BsCaretDownFill /> : <BsCaretRightFill />}
               </h4>
               {isColor && (
+                <ul className="d-flex" style={{ marginTop: "20px" }}>
+                  {colors.map((color, index) => (
+                    <li
+                      key={index}
+                      className=""
+                      onClick={() => chooseColorHandler(color.value)}
+                    >
+                      <span
+                        className="color-circle"
+                        style={{
+                          border: "1px solid",
+                          backgroundColor: color.code,
+                          display: "inline-block",
+                          width: "20px",
+                          height: "20px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      ></span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="col mt-3 mini-card">
+              <h4 className="text-secondary fw-bolder" onClick={togglePrices}>
+                Giá {isPricesOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
+              </h4>
+              {isPricesOpen && (
                 <ul className="list-group">
                   {prices.map((item, index) => (
                     <div className="sidebar__item" key={index}>
                       <div
                         className={
                           price.includes(item.value)
-                            ? `sidebar__item-inner active`
+                            ? `sidebar__item-inner `
                             : `sidebar__item-inner`
                         }
                         onClick={() => choosePriceHandler(item.value)}
@@ -492,20 +511,20 @@ const Product = (props) => {
           <nav aria-label="Page navigation example">
             <ul className="pagination offset-5">
               <li className={page === 1 ? "page-item disabled" : "page-item"}>
-                <button className="page-link" onClick={() => onChangePage(1)}>
+                {/* <button className="page-link" onClick={() => onChangePage(1)}>
                   First
-                </button>
+                </button> */}
               </li>
               {rows}
               <li
                 className={page === total ? "page-item disabled" : "page-item"}
               >
-                <button
+                {/* <button
                   className="page-link"
                   onClick={() => onChangePage(total)}
                 >
                   Last
-                </button>
+                </button> */}
               </li>
             </ul>
           </nav>

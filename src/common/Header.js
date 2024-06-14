@@ -6,7 +6,8 @@ import user_image from "../static/images/default.png";
 import Dropdown from "../admin/dropdown/Dropdown";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-
+import { IoCartOutline } from "react-icons/io5";
+import { getCartItemByAccountId } from "../api/CartApi";
 const user_menu = [
   {
     icon: "bx bx-user",
@@ -107,6 +108,21 @@ const Header = (props) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [isMobile]);
+  // handle cart
+  const [quantityCart, setQuantityCart] = useState(0);
+  useEffect(() => {
+    if (props.user) {
+      getCartItemByAccountId(props.user.id).then((resp) => {
+        const totalQuantity = resp.data.reduce(
+          (acc, item) => acc + item.quantity,
+          0
+        );
+        setQuantityCart(totalQuantity);
+      });
+    } else {
+      setQuantityCart(0);
+    }
+  }, [props.user, props.changeHeaderHandler]);
   return (
     <>
       <div className="border-bottom">
@@ -197,7 +213,7 @@ const Header = (props) => {
                 Mua Sắm
               </NavLink>
             </li>
-            <li
+            {/* <li
               className={
                 props.header === 3
                   ? "nav-item mr-2  mini-item active"
@@ -207,7 +223,7 @@ const Header = (props) => {
               <NavLink className="nav-link text-white" to="/cart" exact>
                 Giỏ hàng
               </NavLink>
-            </li>
+            </li> */}
             {props.user && (
               <li
                 className={
@@ -240,30 +256,12 @@ const Header = (props) => {
                     : "nav-item mr-2  mini-item"
                 }
               >
-                <NavLink className="nav-link" to="/chat" exact>
+                {/* <NavLink className="nav-link" to="/chat" exact>
                   Hỏi đáp
-                </NavLink>
+                </NavLink> */}
               </li>
             )}
           </ul>
-          {/* <form
-            className="form-inline my-2 relative my-lg-0  mr-3"
-            onSubmit={(e) => submitHandler(e)}
-          >
-            <input
-              className="form-control relative mr-sm-2 "
-              type="search"
-              aria-label="Search"
-              name="keyword"
-            />
-            <button className="absolute r-20">
-              <i
-                className="fa fa-search ml-1"
-                aria-hidden="true"
-                style={{ fontSize: "24px" }}
-              ></i>
-            </button>
-          </form> */}
           {props.user && (
             <Dropdown
               customToggle={() => renderUserToggle(curr_user)}
@@ -278,15 +276,32 @@ const Header = (props) => {
               renderItems={(item, index) => renderUserMenu(item, index)}
             />
           )}
-          {/* {props.user ?  <Dropdown
-              customToggle={() => renderUserToggle(curr_user)}
-              contentData={user_menu}
-              renderItems={(item, index) => renderUserMenu(item, index)}
-            /> :  <Dropdown
-              customToggle={() => renderUserToggle(curr_user)}
-              contentData={not_menu}
-              renderItems={(item, index) => renderUserMenu(item, index)}
-            />} */}
+          <div
+            className={
+              props.header === 3
+                ? "nav-item mr-2  mini-item active"
+                : "nav-item mr-2  mini-item"
+            }
+          >
+            <NavLink className="nav-link relative" to="/cart" exact>
+              <IoCartOutline style={{ color: "black", fontSize: "28px" }} />
+              {quantityCart > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    right: "0",
+                    color: "#007bff",
+                    borderRadius: "50%",
+                    padding: "0.25em 0.5em",
+                    fontSize: "13px",
+                  }}
+                >
+                  {quantityCart}
+                </span>
+              )}
+            </NavLink>
+          </div>
         </div>
       </nav>
     </>

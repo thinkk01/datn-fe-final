@@ -10,7 +10,7 @@ const AdminLayOut = () => {
       <Layout></Layout>
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={3000}
         closeOnClick
         pauseOnFocusLoss
         draggable

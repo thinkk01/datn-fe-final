@@ -122,6 +122,17 @@ const Home = (props) => {
       <div className="banner-1">
         <Banner />
       </div>
+      <div className="container-fluid padding">
+        <div className="row welcome mini-card flex-col-center-a gap-20 ">
+          <h4 className="title text-newproduct box-shadow-0 mb-0">
+            Loại Sản Phẩm Nổi Bật
+          </h4>
+          <p className="">
+            Hãy xem các sản phẩm nổi bật, hot trend được giới trẻ săn lùng và
+            chào đón nhất hiện nay!
+          </p>
+        </div>
+      </div>
       <div className="banner-3">
         <Banner3 />
       </div>

@@ -6,7 +6,7 @@ import img3 from "../../static/images/banner-3/2.png";
 const Banner3 = () => {
   return (
     <>
-      <div className="d-flex m-t-5 padding-4 gap-20 justify-content-center">
+      <div className="d-flex m-t-5 padding-4 gap-20 justify-content-center pt-mt-0">
         <div className="hover-hidden-banner2">
           <div className="relative  hover-zoom">
             <img src={img1} className=" w-full hover-zoom " />

@@ -153,7 +153,7 @@ const Cart = (props) => {
       props.buyHandler(id);
     }
   };
-
+  console.log(cart);
   return (
     <div className="col-12">
       <div className="container-fluid mb-5 mt-7">
@@ -184,7 +184,7 @@ const Cart = (props) => {
               </tr>
             </thead>
             <tbody>
-              {cart &&
+              {cart.length > 0 ? (
                 cart.map((item, index) => (
                   <tr key={index}>
                     <th>
@@ -274,13 +274,23 @@ const Cart = (props) => {
                       </button>
                     </td>
                   </tr>
-                ))}
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="8"
+                    className="text-center padding-40px background-color-xam"
+                  >
+                    Không có sản phẩm nào được thêm vào giỏ hàng
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
           <hr className="my-4" />
           <div className="row container-fluid">
             <button
-              className="btn btn-primary mb-3 btn-lg"
+              className="btn btn-outline-primary"
               onClick={checkOutHandler}
             >
               Mua hàng

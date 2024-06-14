@@ -102,6 +102,7 @@ const ProductDetail = (props) => {
           modifyCartItem(data)
             .then(() => {
               toast.success("Thêm vào giỏ hàng thành công.");
+              props.changeHeaderHandler(111);
             })
             .catch((error) => {
               setCount(1);
@@ -131,7 +132,6 @@ const ProductDetail = (props) => {
       }
     }
   };
-
   const updateCount = (value) => {
     console.log(value);
     if (value >= 1) {

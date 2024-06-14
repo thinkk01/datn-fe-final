@@ -26,6 +26,9 @@ import ForgotPassword from "../authenticate/ForgotPassword";
 import Profile from "../authenticate/Profile";
 import { getMe } from "../api/AccountApi";
 import zIndex from "@mui/material/styles/zIndex";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { FaRegMessage } from "react-icons/fa6";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 const UserLayOut = () => {
   const [show, setShow] = useState(false);
@@ -134,7 +137,7 @@ const UserLayOut = () => {
   const setCartItemHandler = (data) => {
     setCartItem(data);
   };
-
+  console.log(header);
   return (
     <div className="">
       <Header
@@ -143,6 +146,9 @@ const UserLayOut = () => {
         user={user}
         userHandler={userHandler}
         refresh={refresh}
+        cartItem={cartItem}
+        setCartItemHandler={setCartItemHandler}
+        changeHeaderHandler={changeHeaderHandler}
       ></Header>
       <Switch>
         <Route path="/" exact>
@@ -240,14 +246,23 @@ const UserLayOut = () => {
       <Footer></Footer>
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={3000}
         closeOnClick
         pauseOnFocusLoss
         draggable
         pauseOnHover
       ></ToastContainer>
-
       <div id="scroll">
+        <NavLink className="nav-link hover-recruiment" to="/chat" exact>
+          <FaFacebookMessenger
+            className="messenger-icon"
+            style={{ fontSize: "40px" }}
+          />
+          <span className="tooltip-text">Chat với Admin</span>
+        </NavLink>
+      </div>
+
+      {/* <div id="scroll">
         <Button variant="primary" onClick={handleShow}>
           Hướng dẫn chọn size
         </Button>
@@ -270,6 +285,7 @@ const UserLayOut = () => {
                   onChange={changeSizeHandler}
                 />
                 {size && <Form.Label className="ml-1 mt-3">{size}</Form.Label>}
+                <p>Nhập giá trị từ 220mm</p>
               </Form.Group>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
@@ -279,7 +295,7 @@ const UserLayOut = () => {
             </Form>
           </Modal.Body>
         </Modal>
-      </div>
+      </div> */}
     </div>
   );
 };

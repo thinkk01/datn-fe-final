@@ -23,7 +23,7 @@ td {
 }
 
 tbody > tr:hover {
-  background-color: var(--main-color) !important;
+  background-color: #dddddd !important;
   color: var(--txt-black);
 }
 
