@@ -12,10 +12,7 @@ const Footer = () => {
               <hr className="light" />
               <h5>Tư vấn mua hàng</h5>
               <hr className="light" />
-              <p>Tư vấn mua hàng (Miễn phí)</p>
-              <p>0337213898 (Nhánh 1)</p>
-              <p>Hỗ trợ kỹ thuật</p>
-              <p>0337213898 (Nhánh 2)</p>
+              <p>Hotline: 0337213898</p>
             </div>
             <div className="col-md-4 flex-col-center-a">
               <hr className="light" />

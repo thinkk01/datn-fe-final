@@ -139,7 +139,7 @@ const Home = (props) => {
       <div className="container-fluid padding">
         <div className="row welcome mini-card flex-col-center-a gap-20">
           <h4 className="title text-newproduct box-shadow-0 mb-0">
-            Sản phẩm mới
+            Sản phẩm Top Trending
           </h4>
           <p className="">
             Hãy xem bộ sưu tập Sản phẩm mới, vừa mới được nhập hàng từ
@@ -263,7 +263,7 @@ const Home = (props) => {
                       </NavLink>
                       <div className="card-body flex-col-center px-2 pb-2 pt-1">
                         <div className="d-flex justify-content-between">
-                          <p className="mb-0">
+                          <p className="mb-0 max-height">
                             <strong>
                               <NavLink
                                 to={`/product-detail/${item.id}`}

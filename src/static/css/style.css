@@ -194,13 +194,30 @@ body {
   position: -webkit-sticky;
   position: sticky;
   top: 100px;
-  left: 0; /* Hoặc giá trị phù hợp để điều chỉnh vị trí */
+  /* left: 0;  */
   z-index: 1;
   height: 100%; /* Chiều cao bằng chiều cao của cửa sổ trình duyệt */
   overflow-y: auto; /* Để sidebar có thể cuộn nếu nội dung quá dài */
 }
 .height-100 {
   height: 100%;
+}
+.max-height {
+  max-width: 200px; /* Giới hạn độ rộng tối đa */
+  white-space: nowrap; /* Không cho phép xuống dòng */
+  overflow: hidden; /* Ẩn phần văn bản bị tràn */
+  text-overflow: ellipsis;
+}
+.button-dathang {
+  position: absolute;
+  right: -593px;
+  top: 393px;
+}
+.flex-right {
+  flex-direction: row-reverse;
+}
+.text-product {
+  color: #415a80 !important;
 }
 .product-detail-im {
   display: flex;
@@ -364,6 +381,13 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .gap-0 {
   gap: 0px !important;
+}
+.mini-card-product {
+  padding: 15px;
+  margin-bottom: 0px;
+  background-color: #555555;
+  /* border-radius: var(--border-radius); */
+  color: #fff;
 }
 .padding-logo {
   padding: 30px !important;

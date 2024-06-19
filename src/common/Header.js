@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../static/css/style.css";
 import logo from "../static/images/logo/logo-removebg-preview.png";
 import { NavLink, useHistory } from "react-router-dom";
-import user_image from "../static/images/default.png";
+import user_image from "../static/images/logo/image.png";
 import Dropdown from "../admin/dropdown/Dropdown";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -123,6 +123,7 @@ const Header = (props) => {
       setQuantityCart(0);
     }
   }, [props.user, props.changeHeaderHandler]);
+  console.log(quantityCart);
   return (
     <>
       <div className="border-bottom">
@@ -285,7 +286,7 @@ const Header = (props) => {
           >
             <NavLink className="nav-link relative" to="/cart" exact>
               <IoCartOutline style={{ color: "black", fontSize: "28px" }} />
-              {quantityCart > 0 && (
+              {quantityCart > -1 && (
                 <span
                   style={{
                     position: "absolute",

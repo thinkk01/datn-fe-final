@@ -256,7 +256,11 @@ const Checkout = (props) => {
         .catch(() => history.push("/out-of-stock"));
     }
   };
-
+  //show voucher
+  const [showInput, setShowInput] = useState(false);
+  const handleH6Click = () => {
+    setShowInput(!showInput);
+  };
   return (
     <div className="pb-3 container-fluid">
       <div className="py-3 col-10 offset-1 text-center">
@@ -267,7 +271,7 @@ const Checkout = (props) => {
         <div className="col-md-5 col-lg-4 order-md-last">
           <h4 className="d-flex justify-content-between align-items-center mb-3">
             <span className="text-dark">Giỏ hàng của bạn</span>
-            <span className="badge bg-primary rounded-pill">{cart.length}</span>
+            {/* <span className="badge bg-primary rounded-pill">{cart.length}</span> */}
           </h4>
           <ul className="list-group mb-3">
             {cart &&
@@ -298,28 +302,38 @@ const Checkout = (props) => {
               ))}
             <li className="list-group-item d-flex justify-content-between bg-light">
               <div className="text-success">
-                <h6 className="my-2">Mã giảm giá</h6>
-                <input
-                  className="form-control my-2"
-                  value={voucher}
-                  disabled={flag}
-                  type="text"
-                  onChange={(e) => voucherHandler(e.target.value)}
-                />
-                <button
-                  type="button"
-                  className="btn btn-primary mr-3"
-                  onClick={useVoucherHandler}
-                >
-                  Áp dụng
-                </button>
-                <button
+                {showInput ? (
+                  <>
+                    <h6 className="my-2" onClick={handleH6Click}>
+                      Nhập mã giảm giá !
+                    </h6>
+                    <input
+                      className="form-control my-2"
+                      value={voucher}
+                      disabled={flag}
+                      type="text"
+                      onChange={(e) => voucherHandler(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-primary mr-3"
+                      onClick={useVoucherHandler}
+                    >
+                      Áp dụng
+                    </button>
+                  </>
+                ) : (
+                  <h6 className="my-2" onClick={handleH6Click}>
+                    Nếu bạn có mã giảm giá vui lòng Click vào đây!
+                  </h6>
+                )}
+                {/* <button
                   type="button"
                   className="btn btn-primary"
                   onClick={refreshVoucherHandler}
                 >
                   Làm mới
-                </button>
+                </button> */}
               </div>
             </li>
             {sub && (
@@ -552,11 +566,11 @@ const Checkout = (props) => {
               <label className="form-check-label">
                 Thanh toán khi giao hàng(COD) <br />
               </label>
-              {text === "Thanh toán khi giao hàng(COD)" && (
+              {/* {text === "Thanh toán khi giao hàng(COD)" && (
                 <div className="alert alert-dark">
                   <p>Bạn được KIỂM TRA hàng và thanh toán khi nhận được hàng</p>
                 </div>
-              )}
+              )} */}
             </div>
             <div className="form-check mt-2">
               <input
@@ -593,9 +607,19 @@ const Checkout = (props) => {
               <label className="form-check-label">
                 Chuyển khoản qua VNPAY <br />
               </label>
+              {/* {text === "Chuyển khoản qua VNPAY" && (
+                <div className="alert alert-dark">
+                  <p>
+                    Vui lòng 
+                  </p>
+                  <p>Ví dụ: 01234 - 0337213898</p>
+                  <p>Thông tin tài khoản:</p>
+                  <p>Nguyễn Đức Thịnh - stk: 0337213898 - MB Bank</p>
+                </div>
+              )} */}
             </div>
             <button
-              className="btn btn-outline-primary"
+              className="btn  btn-outline-primary"
               type="submit"
               style={{ marginLeft: 680 }}
             >

@@ -175,12 +175,12 @@ const Cart = (props) => {
               <tr>
                 <th scope="col">Chọn</th>
                 <th scope="col">Ảnh</th>
-                <th scope="col">Tên</th>
+                <th scope="col">Tên Sản Phẩm</th>
                 <th scope="col">Size</th>
                 <th scope="col">Đơn giá</th>
                 <th scope="col">Số lượng</th>
-                <th scope="col">Thành tiền</th>
-                <th scope="col">Xoá</th>
+                <th scope="col">Tổng tiền</th>
+                <th scope="col">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -288,7 +288,7 @@ const Cart = (props) => {
             </tbody>
           </table>
           <hr className="my-4" />
-          <div className="row container-fluid">
+          <div className="row container-fluid flex-right ">
             <button
               className="btn btn-outline-primary"
               onClick={checkOutHandler}

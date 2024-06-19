@@ -275,12 +275,12 @@ const Product = (props) => {
           <div
             className={`col-2.5 height-100 ${isFixed ? "sidebar-fixed" : ""}`}
           >
-            <div className="col mini-card">
-              <h4 className="text-secondary fw-bolder" onClick={toggleBrands}>
+            <div className="col mini-card-product">
+              <h4 className=" fw-bolder" onClick={toggleBrands}>
                 Thương Hiệu Sản Phẩm{" "}
                 {isBrandsOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
               </h4>
-              {isBrandsOpen && (
+              {!isBrandsOpen && (
                 <ul className="list-group">
                   {brands.map((item, index) => (
                     <div
@@ -303,15 +303,12 @@ const Product = (props) => {
                 </ul>
               )}
             </div>
-            <div className="col mini-card">
-              <h4
-                className="text-secondary fw-bolder"
-                onClick={toggleCategories}
-              >
+            <div className="col mini-card-product">
+              <h4 className=" fw-bolder" onClick={toggleCategories}>
                 Loại sản phẩm{" "}
                 {isCategoriesOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
               </h4>
-              {isCategoriesOpen && (
+              {!isCategoriesOpen && (
                 <ul className="list-group">
                   {categories.map((item, index) => (
                     <div
@@ -334,8 +331,8 @@ const Product = (props) => {
                 </ul>
               )}
             </div>
-            <div className="col mt-3 mini-card">
-              <h4 className="text-secondary fw-bolder" onClick={toggleColor}>
+            <div className="col mini-card-product">
+              <h4 className=" fw-bolder" onClick={toggleColor}>
                 Màu sắc {isColor ? <BsCaretDownFill /> : <BsCaretRightFill />}
               </h4>
               {isColor && (
@@ -363,8 +360,8 @@ const Product = (props) => {
                 </ul>
               )}
             </div>
-            <div className="col mt-3 mini-card">
-              <h4 className="text-secondary fw-bolder" onClick={togglePrices}>
+            <div className="col mini-card-product">
+              <h4 className=" fw-bolder" onClick={togglePrices}>
                 Giá {isPricesOpen ? <BsCaretDownFill /> : <BsCaretRightFill />}
               </h4>
               {isPricesOpen && (
@@ -388,7 +385,7 @@ const Product = (props) => {
               )}
             </div>
 
-            <div className="col mt-3 mini-card">
+            <div className="col mini-card-product">
               <img src={imgSide} style={{ width: "100%", height: "350px" }} />
             </div>
           </div>
@@ -413,7 +410,7 @@ const Product = (props) => {
                           <img
                             src={require(`../static/images/${item.image}`)}
                             alt="Product"
-                            className="mini-card"
+                            className="mini-card-product"
                           />
                         </NavLink>
                         <div className="card-body flex-col-center px-2 pb-2 pt-1">
@@ -422,7 +419,7 @@ const Product = (props) => {
                               <strong>
                                 <NavLink
                                   to={`/product-detail/${item.id}`}
-                                  className="text-secondary font-size-base"
+                                  className=" font-size-base"
                                 >
                                   {item.name}
                                 </NavLink>
@@ -430,7 +427,7 @@ const Product = (props) => {
                             </p>
                             <p className="mb-1">
                               <small>
-                                <NavLink to="#" className="text-secondary ">
+                                <NavLink to="#" className=" ">
                                   {item.brand}
                                 </NavLink>
                               </small>
@@ -459,7 +456,7 @@ const Product = (props) => {
                             </p> */}
 
                             <div className="d-flex justify-content-between">
-                              <p className="h4 text-primary">
+                              <p className="h4 text-product">
                                 {(
                                   (item.price * (100 - item.discount)) /
                                   100
@@ -467,7 +464,7 @@ const Product = (props) => {
                                 đ{" "}
                               </p>
 
-                              <p className="mb-0 font-size-small text-secondary">
+                              <p className="mb-0 font-size-small ">
                                 <strike>{item.price.toLocaleString()}đ</strike>
                               </p>
                             </div>
