@@ -190,6 +190,10 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
 .sidebar-fixed {
   position: -webkit-sticky;
   position: sticky;
@@ -212,6 +216,9 @@ body {
   position: absolute;
   right: -593px;
   top: 393px;
+}
+.text-white {
+  color: white;
 }
 .flex-right {
   flex-direction: row-reverse;
@@ -366,6 +373,13 @@ body {
 .nav-item-list-group.open {
   max-height: 500px; /* Tăng giá trị này nếu danh sách của bạn dài hơn */
 }
+.col-full {
+  max-width: 100%;
+}
+.status-success {
+  color: #28a745;
+}
+
 .scroll-button.right {
   transform: translate(150%, -50%);
   right: 0;

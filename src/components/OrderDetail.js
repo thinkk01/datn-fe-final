@@ -13,6 +13,7 @@ const OrderDetail = (props) => {
   const [payment, setPayment] = useState();
   const [paymentUrl, setPaymentUrl] = useState("");
   const [oderId, setOrderId] = useState();
+  const [voucher, setVoucher] = useState(null);
   const encode = atob(
     window.location.href.substring(window.location.href.lastIndexOf("/") + 1)
   );
@@ -29,6 +30,9 @@ const OrderDetail = (props) => {
         setOrder(orderData);
         setSale(orderData.voucher ? orderData.voucher.discount : 0);
         setTotal(orderData.total);
+        // setVoucher(
+        //   orderData.voucher ? orderData.voucher.code : orderData.voucher.code
+        // );
 
         setOrderDetail(orderDetails);
         const result = orderDetails.reduce(
@@ -73,46 +77,102 @@ const OrderDetail = (props) => {
 
     fetchPendingStatus();
   }, [location]);
-  console.log(isPending1);
+  console.log(voucher);
+  const formatDate = (dateString) => {
+    return dateString.split("T")[0];
+  };
   return (
-    <div className="container-fluid row padding mb-5">
+    <div className="container-fluid padding mb-5">
       <div className="col-10 offset-1 text ">
         <p
           className="display-4 text-primary"
-          style={{ fontSize: "34px", fontWeight: "bolder" }}
+          style={{
+            fontSize: "34px",
+            fontWeight: "bolder",
+            textAlign: "center",
+          }}
         >
-          Đơn hàng #{order.id}
+          Thông tin chi tiết Đơn hàng #{order.id}
         </p>
       </div>
-      <div className="col-8 welcome mb-5 mt-5">
-        <div className="col-10 offset-1 mb-5">
+      <div
+        className=" mb-5 mt-5"
+        style={{ display: "flex", justifyContent: "space-evenly" }}
+      >
+        <div className=" offset-1 text ">
+          <p className="display-4 text-primary" style={{ fontSize: "24px" }}>
+            Thông tin mua hàng
+          </p>
+          <p>Ngày tạo: {order.createDate}</p>
+          <p>Người nhận: {order.fullname}</p>
+          <p>Email: {order.email}</p>
+        </div>
+        <div className=" offset-1 text ">
+          <p className="display-4 text-primary" style={{ fontSize: "24px" }}>
+            Địa chỉ nhận hàng
+          </p>
+          <p>SDT: {order.phone}</p>
+          <p>DC: {order.address}</p>
+        </div>
+      </div>
+      <div className=" welcome mb-5 mt-5">
+        <div className="col-full offset-1 mb-5">
           <table className="table table-striped table-bordered">
             <thead>
               <tr>
-                <th scope="col">Mã sản phẩm</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Ngày tạo</th>
                 <th scope="col">Size</th>
                 <th scope="col">Giá</th>
                 <th scope="col">Số lượng</th>
                 <th scope="col">Tổng</th>
+                <th scope="col">Trạng thái thanh toán</th>
               </tr>
             </thead>
             <tbody>
               {orderDetail &&
                 orderDetail.map((item, index) => (
                   <tr key={index}>
-                    <th scope="row">{item.attribute.id}</th>
+                    <th scope="row">{item.attribute.name}</th>
+                    <td>{order.createDate}</td>
                     <td>{item.attribute.size}</td>
                     <td>{item.sellPrice.toLocaleString()}₫</td>
                     <td>{item.quantity}</td>
                     <td>
                       {(item.sellPrice * item.quantity).toLocaleString()}₫
                     </td>
+                    <td>
+                      {" "}
+                      <div className="col text ">
+                        <p
+                          className="status-success"
+                          style={{ fontWeight: "bolder" }}
+                        >
+                          {order && order.isPending ? (
+                            "Đã thanh toán"
+                          ) : payment === "Chuyển khoản qua VNPAY" ? (
+                            <div className="text-black">
+                              <p className="text-danger">Chưa Thanh Toán </p>
+                              Vui lòng thanh toán{" "}
+                              <a
+                                className="text-primary"
+                                href={paymentUrl ? paymentUrl : "#"}
+                              >
+                                Tại Đây
+                              </a>
+                            </div>
+                          ) : (
+                            <p className="text-danger">Chưa Thanh Toán </p>
+                          )}
+                        </p>
+                      </div>
+                    </td>
                   </tr>
                 ))}
             </tbody>
           </table>
           <div className="row mb-5">
-            <div className="col offset-8 text ">
+            {/* <div className="col offset-8 text ">
               <p>Tạm tính: {amount && amount.toLocaleString()} đ</p>
               <p>
                 Giảm giá: -{" "}
@@ -121,10 +181,40 @@ const OrderDetail = (props) => {
               <p className="text-danger">
                 Tổng cộng: {total && total.toLocaleString()} đ
               </p>
-            </div>
+            </div> */}
+            <table className="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Tổng tiền sản phẩm</th>
+                  <th scope="col">Voucher sử dụng</th>
+                  <th scope="col">Giảm giá / Voucher</th>
+                  <th scope="col">Tổng tiền phải trả</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{amount && amount.toLocaleString()} đ</td>
+                  <td>
+                    {order.voucher?.code
+                      ? order.voucher.code
+                      : "Không có voucher nào sử dụng!"}
+                    {/* {order.voucher !== null
+                      ? order.voucher.code
+                      : "Không có voucher nào sử dụng!"} */}
+                  </td>
+                  <td>
+                    {" "}
+                    {sale ? ((amount * sale) / 100).toLocaleString() : 0} đ
+                  </td>
+                  <td className="text-danger" style={{ fontWeight: "bolder" }}>
+                    {total && total.toLocaleString()} đ
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div className="row mb-5">
-            <div className="col text ">
+            {/* <div className="col text ">
               <p
                 className="display-4 text-primary"
                 style={{ fontSize: "24px" }}
@@ -149,8 +239,8 @@ const OrderDetail = (props) => {
                   "Chưa Thanh Toán"
                 )}
               </p>
-            </div>
-            <div className="col text ">
+            </div> */}
+            {/* <div className="col text ">
               <p
                 className="display-4 text-primary"
                 style={{ fontSize: "24px" }}
@@ -168,30 +258,50 @@ const OrderDetail = (props) => {
                 className="display-4 text-primary"
                 style={{ fontSize: "24px" }}
               >
-                Phương thức giao hàng
+                Phương thức thanh toán
               </p>
               <p className="text-danger" style={{ fontWeight: "bolder" }}>
                 {order && order.payment}
               </p>
             </div>
+          </div> */}
+            <h4 class="offset-1  card-title text-newproduct mb-0 fw-bolder">
+              Thông tin vận chuyển
+            </h4>
+            <table className="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Shipment</th>
+                  <th scope="col">Mã vận đơn</th>
+                  <th scope="col">Ngày dự kiến giao hàng</th>
+                  <th scope="col">Phương thức thanh toán</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderDetail &&
+                  orderDetail.map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        {order.shipment ? order.shipment : "Chưa có thông tin"}
+                      </td>
+                      <td>{order.code ? order.code : "Chưa có thông tin"}</td>
+
+                      <td>
+                        {" "}
+                        {order.shipDate
+                          ? formatDate(order.shipDate)
+                          : "Chưa có thông tin"}
+                      </td>
+                      <td>
+                        <p className="" style={{ fontWeight: "bolder" }}>
+                          {order && order.payment}
+                        </p>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </div>
-        </div>
-      </div>
-      <div className="col-4 mb-5 mt-5">
-        <div className="col-10 offset-1 text ">
-          <p className="display-4 text-danger" style={{ fontSize: "24px" }}>
-            Thông tin mua hàng
-          </p>
-          <p>Ngày tạo: {order.createDate}</p>
-          <p>Người nhận: {order.fullname}</p>
-          <p>Email: {order.email}</p>
-        </div>
-        <div className="col-10 offset-1 text ">
-          <p className="display-4 text-danger" style={{ fontSize: "24px" }}>
-            Địa chỉ nhận hàng
-          </p>
-          <p>SDT: {order.phone}</p>
-          <p>DC: {order.address}</p>
         </div>
       </div>
     </div>

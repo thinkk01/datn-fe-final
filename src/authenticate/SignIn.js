@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { getMe } from "../api/AccountApi";
 import { SlSocialFacebook } from "react-icons/sl";
 import { SlSocialGoogle } from "react-icons/sl";
-
+import imgLogin from "../static/images/banner/image.png";
 const SignIn = (props) => {
   const history = useHistory();
   useEffect(() => {
@@ -73,17 +73,24 @@ const SignIn = (props) => {
   } = useForm();
 
   return (
-    <div className="container-login100 bg-backgroundLogin">
+    <div className="container-login100 bg-backgroundLogin flex-center">
       {" "}
       <section className="vh-100 ">
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div className="">
               <div
-                className="card wrap-login text-white"
-                style={{ borderRadius: "1rem" }}
+                className="card wrap-login text-white d-flex"
+                style={{
+                  borderRadius: "1rem",
+                  flexDirection: "row",
+                  width: "1000px",
+                }}
               >
-                <div className="card-body p-5">
+                <div className="">
+                  <img src={imgLogin} style={{ height: "100%" }} />
+                </div>
+                <div className="card-body p-5" style={{ minWidth: "390px" }}>
                   <div className="mb-md-5 mt-md-4 pb-5 flex-col-d">
                     <h2 className=" login100-form-title">Đăng nhập</h2>
                     <form
@@ -143,9 +150,6 @@ const SignIn = (props) => {
                           Mật khẩu không hợp lệ!
                         </div>
                       )}
-                      {/* <div className="text-right p-t-8 p-b-31">
-                        <a href="#">Forgot password?</a>
-                      </div> */}
 
                       <div className="container-login100-form-btn">
                         <div className="wrap-login100-form-btn">
@@ -162,6 +166,16 @@ const SignIn = (props) => {
                         Đăng kí ngay
                       </NavLink>
                     </p>
+                    <div className="mb-0 text-center">
+                      <NavLink
+                        to="/forgot-password"
+                        exact
+                        className=" fw-bold"
+                        style={{ color: "#666" }}
+                      >
+                        Forgot password?
+                      </NavLink>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -4,13 +4,14 @@ import "./signin.css";
 import { forgotPassword } from "../api/AuthenticateApi";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-
+import imgLogin from "../static/images/banner/image.png";
+import { MdPerson, MdLock } from "react-icons/md";
 const ForgotPassword = () => {
   const history = useHistory();
 
   const signInHandler = (data) => {
     const userFlag = {
-      username: data.username
+      username: data.username,
     };
     forgotPassword(userFlag)
       .then((res) => {
@@ -27,59 +28,70 @@ const ForgotPassword = () => {
   } = useForm();
 
   return (
-    <div>
+    <div className="container-login100 bg-backgroundLogin flex-center">
       {" "}
-      <section className="vh-100 gradient-custom">
-        <div className="container py-5 h-100">
+      <section className=" vh-100">
+        <div className=" py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div className="">
               <div
-                className="card bg-dark text-white"
-                style={{ borderRadius: "1rem" }}
+                className="card wrap-login text-white d-flex"
+                style={{
+                  borderRadius: "1rem",
+                  flexDirection: "row",
+                  width: "1000px",
+                }}
               >
-                <div className="card-body p-5 text-center">
-                  <div className="mb-md-5 mt-md-4 pb-5">
-                    <h2 className="fw-bold mb-5 text-uppercase">Quên mật khẩu</h2>
+                <div className="">
+                  <img src={imgLogin} style={{ height: "100%" }} />
+                </div>
+                <div className="card-body p-5" style={{ minWidth: "390px" }}>
+                  <div className="mb-md-5 mt-md-4 pb-5 flex-col-d">
+                    <h2 className="login100-form-title ">Quên mật khẩu</h2>
                     <form
-                      className="needs-validation"
+                      className="needs-validation  flex-col-d"
                       onSubmit={handleSubmit(signInHandler)}
                     >
-                      <div className="form-outline form-white mb-4">
+                      <div className="wrap-input100 validate-input mb-[23px]">
+                        <span className="label-input100">Username</span>
                         <input
                           type="text"
                           id="typeEmailX"
-                          className="form-control form-control-lg"
+                          placeholder="Type your username"
+                          className="input100"
                           {...register("username", {
                             required: true,
                             pattern: /^\s*\S+.*/,
                           })}
                         />
-                        <label className="form-label" htmlFor="typeEmailX">
+                        {/* <label className="form-label" htmlFor="typeEmailX">
                           Tài khoản
-                        </label>
+                        </label> */}
+                        <span
+                          className="focus-input100"
+                          data-symbol="&#xf190;"
+                        ></span>
+                        <MdPerson className="focus-input100" color="#adadad" />
                         {errors.username && (
                           <div className="alert alert-danger" role="alert">
                             Tài khoản không hợp lệ!
                           </div>
                         )}
                       </div>
-                      <button
-                        className="btn btn-outline-light btn-lg px-5"
-                        type="submit"
-                      >
-                        Lấy lại mật khẩu
-                      </button>
+                      <div className="container-login100-form-btn">
+                        <div className="wrap-login100-form-btn">
+                          <div className="login100-form-bgbtn"></div>
+                          <button className="login100-form-btn" type="submit">
+                            Lấy lại mật khẩu
+                          </button>
+                        </div>
+                      </div>
                     </form>
                   </div>
                   <div>
                     <p className="mb-0">
-                      Quay lại{" "}
-                      <NavLink
-                        to="/sign-in"
-                        exact
-                        className="text-white-50 fw-bold"
-                      >
-                        Đăng nhập
+                      <NavLink to="/sign-in" exact className=" fw-bold">
+                        Quay lại
                       </NavLink>
                     </p>
                   </div>
@@ -88,7 +100,7 @@ const ForgotPassword = () => {
             </div>
           </div>
         </div>
-      </section>    
+      </section>
     </div>
   );
 };

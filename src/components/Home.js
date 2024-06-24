@@ -295,7 +295,7 @@ const Home = (props) => {
                         </div>
                         <div className="d-flex justify-content-between">
                           <div className="d-flex justify-content-between">
-                            <p className="h4 text-primary">
+                            <p className="h4 text-product">
                               {(
                                 (item.price * (100 - item.discount)) /
                                 100
