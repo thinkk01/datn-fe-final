@@ -33,7 +33,6 @@ const ProductDetail = (props) => {
     getProductById(value)
       .then((res) => {
         setTemp(res.data);
-        console.log(res.data);
       })
       .catch((error) => console.log(error));
     setShow(true);
@@ -89,7 +88,6 @@ const ProductDetail = (props) => {
         if (props.user) {
           const flagId = cart.map((item) => item.id);
           const obj = cart.filter((i) => i.id == attributeId)[0];
-          console.log(obj);
           const data = {
             accountId: props.user.id,
             attributeId: attributeId,
@@ -98,7 +96,6 @@ const ProductDetail = (props) => {
               : count,
             lastPrice: lastPrice,
           };
-          console.log(data);
           modifyCartItem(data)
             .then(() => {
               toast.success("Thêm vào giỏ hàng thành công.");
@@ -133,7 +130,6 @@ const ProductDetail = (props) => {
     }
   };
   const updateCount = (value) => {
-    console.log(value);
     if (value >= 1) {
       isEnoughCartItem(flag, value)
         .then(() => {
@@ -162,6 +158,12 @@ const ProductDetail = (props) => {
   const handleThumbnailClick = (image) => {
     // setMainImage(image);
   };
+  const colors = [
+    { code: "#000", value: "5" },
+    { code: "#008000", value: "5" },
+    { code: "#FFFF00", value: "5" },
+    { code: "#FFC0CB", value: "5" },
+  ];
   return (
     <div>
       {item && (
@@ -243,7 +245,31 @@ const ProductDetail = (props) => {
                           </div>
                         ))}
                       </div>
-
+                      <div
+                        className="d-flex gap-20"
+                        style={{ marginBottom: "20px" }}
+                      >
+                        <label style={{ marginRight: "20px" }}>Chọn màu</label>
+                        <ul className="d-flex">
+                          {colors.map((color, index) => (
+                            <li key={index} style={{ cursor: "pointer" }}>
+                              <span
+                                className="color-circle"
+                                style={{
+                                  border: "1px solid",
+                                  backgroundColor: color.code,
+                                  display: "inline-block",
+                                  width: "20px",
+                                  height: "20px",
+                                  borderRadius: "50%",
+                                  marginRight: "10px",
+                                }}
+                              ></span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <hr />
                       <div className="d-flex gap-20">
                         <div>
                           <button

@@ -58,7 +58,6 @@ const UserLayOut = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      console.log(token);
       authenticateUser(token);
     }
   }, []);
@@ -137,7 +136,6 @@ const UserLayOut = () => {
   const setCartItemHandler = (data) => {
     setCartItem(data);
   };
-  console.log(header);
   return (
     <div className="">
       <Header
@@ -262,7 +260,7 @@ const UserLayOut = () => {
         </NavLink>
       </div>
 
-      {/* <div id="scroll">
+      <div id="scroll" style={{ marginRight: "100px" }}>
         <Button variant="primary" onClick={handleShow}>
           Hướng dẫn chọn size
         </Button>
@@ -295,7 +293,7 @@ const UserLayOut = () => {
             </Form>
           </Modal.Body>
         </Modal>
-      </div> */}
+      </div>
     </div>
   );
 };

@@ -153,7 +153,6 @@ const Cart = (props) => {
       props.buyHandler(id);
     }
   };
-  console.log(cart);
   return (
     <div className="col-12">
       <div className="container-fluid mb-5 mt-7">

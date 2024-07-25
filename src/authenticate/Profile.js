@@ -34,7 +34,7 @@ const Profile = (props) => {
       ...data,
       id: flag.id,
     };
-    console.log(result);
+    // console.log(result);
     updatepProfile(result)
       .then(() => {
         toast.success("Cập nhật thông tin thành công!");

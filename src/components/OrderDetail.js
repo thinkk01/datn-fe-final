@@ -56,11 +56,6 @@ const OrderDetail = (props) => {
       });
     }
   }, [total, order.id]);
-  // const handleClick = (e) => {
-  //   getUrlVnpay(total, order.id).then((response) => {
-  //     setPaymentUrl(response.data);
-  //   });
-  // };
   // GET pending
   const [isPending1, setIsPending1] = useState(false);
   const location = useLocation();
@@ -68,8 +63,6 @@ const OrderDetail = (props) => {
     const fetchPendingStatus = async () => {
       try {
         const response = await getPendingVnPay();
-        console.log(response);
-        // setIsPending1(response.data.isPending1);
       } catch (error) {
         console.error("Error fetching pending status:", error);
       }
@@ -77,7 +70,6 @@ const OrderDetail = (props) => {
 
     fetchPendingStatus();
   }, [location]);
-  console.log(voucher);
   const formatDate = (dateString) => {
     return dateString.split("T")[0];
   };

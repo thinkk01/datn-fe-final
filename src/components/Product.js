@@ -152,7 +152,6 @@ const Product = (props) => {
         setTotal(response.data.totalPages);
       });
     } else {
-      console.log(false);
       const data = {
         page: page,
         count: count,
@@ -291,7 +290,7 @@ const Product = (props) => {
                       <div
                         className={
                           brand.includes(item.value)
-                            ? `sidebar__item-inner `
+                            ? `sidebar__item-inner active`
                             : `sidebar__item-inner`
                         }
                       >
@@ -319,7 +318,7 @@ const Product = (props) => {
                       <div
                         className={
                           category.includes(item.value)
-                            ? `sidebar__item-inner `
+                            ? `sidebar__item-inner active`
                             : `sidebar__item-inner`
                         }
                       >
@@ -371,7 +370,7 @@ const Product = (props) => {
                       <div
                         className={
                           price.includes(item.value)
-                            ? `sidebar__item-inner `
+                            ? `sidebar__item-inner active`
                             : `sidebar__item-inner`
                         }
                         onClick={() => choosePriceHandler(item.value)}

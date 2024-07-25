@@ -19,7 +19,6 @@ const Register = () => {
       ...data,
       roleId: "3",
     };
-    console.log(result);
     registerAccount(result)
       .then(() => {
         toast.success("Đăng kí thành công!");

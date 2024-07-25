@@ -40,7 +40,6 @@ const Home = (props) => {
     getAllProducts(page, 6, active).then((response) => {
       setProducts(response.data.content);
       setTotal(response.data.totalPages);
-      console.log(response);
     });
     props.changeHeaderHandler(1);
   }, [page]);

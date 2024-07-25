@@ -52,7 +52,6 @@ const Order = (props) => {
   };
 
   const descriptionHandler = (value) => {
-    console.log(value);
     setDescription(value);
   };
 
@@ -82,7 +81,6 @@ const Order = (props) => {
   };
 
   const reasonHandler = (value) => {
-    console.log(value);
     setReason(value);
   };
   useEffect(() => {
@@ -118,7 +116,6 @@ const Order = (props) => {
       })
       .catch((error) => console.log(error.response.data.Errors));
   };
-  console.log(order);
   return (
     <div>
       <div className="col-12">

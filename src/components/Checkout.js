@@ -145,7 +145,6 @@ const Checkout = (props) => {
   };
 
   const onSubmitHandler = (data) => {
-    console.log(data);
     if (voucher.length > 0) {
       getVoucherByCode(voucher)
         .then(() => {
@@ -175,7 +174,6 @@ const Checkout = (props) => {
               },
             })),
           };
-          console.log(order);
 
           createOrder(order)
             .then((resp) => {
@@ -211,7 +209,6 @@ const Checkout = (props) => {
           },
         })),
       };
-      console.log("payment vnpay");
       createOrder(order)
         .then((resp) => {
           toast.success("Đặt hàng thành công");

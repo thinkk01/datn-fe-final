@@ -123,7 +123,6 @@ const Header = (props) => {
       setQuantityCart(0);
     }
   }, [props.user, props.changeHeaderHandler]);
-  console.log(quantityCart);
   return (
     <>
       <div className="border-bottom">
